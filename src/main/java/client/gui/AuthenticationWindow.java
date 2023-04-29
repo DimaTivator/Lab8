@@ -50,7 +50,9 @@ public class AuthenticationWindow extends JFrame {
             password = authenticator.encodePassword(password);
 
             authenticator.logIn(login, password);
-            checkAuthentication();
+            if (checkAuthentication()) {
+                this.dispose();
+            }
         });
 
         registerButton.addActionListener(event -> {
@@ -59,7 +61,9 @@ public class AuthenticationWindow extends JFrame {
             password = authenticator.encodePassword(password);
 
             authenticator.register(login, password);
-            checkAuthentication();
+            if (checkAuthentication()) {
+                this.dispose();
+            }
         });
 
 
@@ -150,18 +154,14 @@ public class AuthenticationWindow extends JFrame {
     }
 
 
-    private void checkAuthentication() {
+    private boolean checkAuthentication() {
 
         try {
-            boolean authenticationSuccess = authenticator.processResponse();
-            if (authenticationSuccess) {
-                System.out.println("SUCCESS");
-            } else {
-                System.out.println(":(");
-            }
+            return authenticator.processResponse();
         } catch (ServerIsDownException | InvalidInputException e) {
             JFrame errorFrame = new JFrame("Error");
             JOptionPane.showMessageDialog(errorFrame, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
+        return false;
     }
 }
