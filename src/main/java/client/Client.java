@@ -1,5 +1,6 @@
 package client;
 
+import client.gui.AuthenticationWindow;
 import commonModule.auxiliaryClasses.ConsoleColors;
 import commonModule.commands.Command;
 import commonModule.dataStructures.network.*;
@@ -7,6 +8,7 @@ import commonModule.dataStructures.Triplet;
 import commonModule.exceptions.commandExceptions.InvalidArgumentsException;
 import commonModule.io.consoleIO.CommandParser;
 
+import javax.swing.*;
 import java.net.InetAddress;
 import java.net.UnknownHostException;
 import java.nio.file.Files;
@@ -48,10 +50,7 @@ public class Client {
             NetworkProvider networkProvider = new NetworkProvider(address.getHostAddress(), port);
             CommandParser commandParser = new CommandParser();
             ScriptExecutor scriptExecutor = new ScriptExecutor();
-
-            // User authentication
             Authenticator authenticator = new Authenticator(networkProvider);
-            authenticator.authenticate();
 
 
             for (int i = 0; i < args.length; i++) {
@@ -71,6 +70,13 @@ public class Client {
                     }
                 }
             }
+
+            // Creating windows
+            SwingUtilities.invokeLater(() -> {
+                AuthenticationWindow authenticationWindow = new AuthenticationWindow(authenticator);
+                authenticationWindow.setVisible(true);
+                authenticationWindow.setSize(300, 200);
+            });
 
             System.out.println("If you want to see the list of available commands, enter 'help'");
 

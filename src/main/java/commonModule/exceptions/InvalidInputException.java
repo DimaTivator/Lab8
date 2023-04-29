@@ -11,6 +11,6 @@ public class InvalidInputException extends Exception {
      @param message the detail message.
      */
     public InvalidInputException(String message) {
-        super(ConsoleColors.RED + message + ConsoleColors.RESET);
+        super(message);
     }
 }
