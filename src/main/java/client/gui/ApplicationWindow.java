@@ -7,8 +7,10 @@ package client.gui;
 import client.Authenticator;
 import client.CommandResponseReceiver;
 import client.CommandSender;
+import commonModule.commands.Command;
 import commonModule.commands.commandObjects.HelpCommand;
 import commonModule.commands.commandObjects.InfoCommand;
+import commonModule.commands.commandObjects.PrintUniqueMoodCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -383,27 +385,32 @@ public class ApplicationWindow extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
 
-    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
+    private void processTextCommand(Command command) {
         interactionPanel.removeAll();
         interactionPanel.setLayout(new BoxLayout(interactionPanel, BoxLayout.Y_AXIS));
 
-        TextCommandPanel infoPanel = new TextCommandPanel();
-        infoPanel.setVisible(true);
-        interactionPanel.add(infoPanel);
+        TextCommandPanel textCommandPanel = new TextCommandPanel();
+        textCommandPanel.setVisible(true);
+        interactionPanel.add(textCommandPanel);
 
         // sending command request
-        commandSender.sendCommand(new InfoCommand());
+        commandSender.sendCommand(command);
 
         // receiving command response
         try {
             String responseText = commandResponseReceiver.receiveCommandResponse();
-            infoPanel.setText(responseText);
+            textCommandPanel.setText(responseText);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
 
         revalidate();
         repaint();
+    }
+
+
+    private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
+        processTextCommand(new InfoCommand());
     }//GEN-LAST:event_infoButtonActionPerformed
 
 
@@ -413,27 +420,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
-
-        interactionPanel.removeAll();
-        interactionPanel.setLayout(new BoxLayout(interactionPanel, BoxLayout.Y_AXIS));
-
-        TextCommandPanel helpPanel = new TextCommandPanel();
-        helpPanel.setVisible(true);
-        interactionPanel.add(helpPanel);
-
-        // sending command request
-        commandSender.sendCommand(new HelpCommand());
-
-        // receiving command response
-        try {
-            String responseText = commandResponseReceiver.receiveCommandResponse();
-            helpPanel.setText(responseText);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
-        }
-
-        revalidate();
-        repaint();
+        processTextCommand(new HelpCommand());
     }//GEN-LAST:event_helpButtonActionPerformed
 
 
@@ -488,7 +475,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
 
     private void uniqieMoodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uniqieMoodButtonActionPerformed
-        // TODO add your handling code here:
+        processTextCommand(new PrintUniqueMoodCommand());
     }//GEN-LAST:event_uniqieMoodButtonActionPerformed
 
 

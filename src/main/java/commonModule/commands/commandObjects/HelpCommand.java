@@ -59,7 +59,6 @@ public class HelpCommand extends CommandTemplate implements CommandWithResponse 
 
         output.append("<br>");
         output.append("</html>");
-        System.out.println(output);
     }
 
     @Override
