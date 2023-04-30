@@ -73,9 +73,9 @@ public class Client {
 
             // Creating windows
             SwingUtilities.invokeLater(() -> {
-                AuthenticationWindow authenticationWindow = new AuthenticationWindow(authenticator);
-                authenticationWindow.setVisible(true);
-                authenticationWindow.setSize(300, 200);
+                java.awt.EventQueue.invokeLater(() -> {
+                    new AuthenticationWindow(authenticator).setVisible(true);
+                });
             });
 
             System.out.println("If you want to see the list of available commands, enter 'help'");
