@@ -6,16 +6,19 @@ package client.gui;
 
 import client.CommandSender;
 
+import javax.swing.text.SimpleAttributeSet;
+import javax.swing.text.StyleConstants;
+
 /**
  *
  * @author dmitrii_andriianov
  */
-public class HelpPanel extends javax.swing.JPanel {
+public class TextCommandPanel extends javax.swing.JPanel {
 
     /**
      * Creates new form HelpPanel
      */
-    public HelpPanel() {
+    public TextCommandPanel() {
         initComponents();
     }
 
@@ -33,6 +36,8 @@ public class HelpPanel extends javax.swing.JPanel {
     private void initComponents() {
 
         textLabel = new javax.swing.JLabel();
+
+        setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
         textLabel.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         textLabel.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
