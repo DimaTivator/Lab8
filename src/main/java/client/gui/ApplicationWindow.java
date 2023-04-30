@@ -4,9 +4,11 @@
  */
 package client.gui;
 
+import client.Authenticator;
 import client.CommandResponseReceiver;
 import client.CommandSender;
 import commonModule.commands.commandObjects.HelpCommand;
+import commonModule.commands.commandObjects.InfoCommand;
 
 import javax.swing.*;
 import java.awt.*;
@@ -19,15 +21,18 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
     private final CommandSender commandSender;
     private final CommandResponseReceiver commandResponseReceiver;
+    private final Authenticator authenticator;
 
     /**
      * Creates new form ApplicationWindow
      */
-    public ApplicationWindow(CommandSender commandSender, CommandResponseReceiver commandResponseReceiver) {
+    public ApplicationWindow(Authenticator authenticator, CommandSender commandSender, CommandResponseReceiver commandResponseReceiver) {
         initComponents();
+        usernameLabel.setText(authenticator.getLogin());
 
         this.commandSender = commandSender;
         this.commandResponseReceiver = commandResponseReceiver;
+        this.authenticator = authenticator;
     }
 
     /**
@@ -66,7 +71,6 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         usernameLabel.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(71, 199, 231));
-        usernameLabel.setText("Username");
 
         usernameIconLabel.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/username_icon.png"))); // NOI18N
 
@@ -77,20 +81,22 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.setLayout(interactionPanelLayout);
         interactionPanelLayout.setHorizontalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interactionPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(85, 85, 85))
+            .addGroup(interactionPanelLayout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE))
         );
         interactionPanelLayout.setVerticalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(interactionPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
+        commandsButtonsPanel.setBackground(new java.awt.Color(50, 110, 211));
+
         helpButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        helpButton.setForeground(new java.awt.Color(50, 110, 211));
+        helpButton.setForeground(new java.awt.Color(255, 255, 255));
         helpButton.setText("help");
         helpButton.setBorder(null);
         helpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -103,7 +109,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         infoButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        infoButton.setForeground(new java.awt.Color(50, 110, 211));
+        infoButton.setForeground(new java.awt.Color(255, 255, 255));
         infoButton.setText("info");
         infoButton.setBorder(null);
         infoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -116,7 +122,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         showButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        showButton.setForeground(new java.awt.Color(50, 110, 211));
+        showButton.setForeground(new java.awt.Color(255, 255, 255));
         showButton.setText("show");
         showButton.setBorder(null);
         showButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -129,7 +135,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         insertButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        insertButton.setForeground(new java.awt.Color(50, 110, 211));
+        insertButton.setForeground(new java.awt.Color(255, 255, 255));
         insertButton.setText("insert");
         insertButton.setBorder(null);
         insertButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -142,7 +148,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         updateButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        updateButton.setForeground(new java.awt.Color(50, 110, 211));
+        updateButton.setForeground(new java.awt.Color(255, 255, 255));
         updateButton.setText("update");
         updateButton.setBorder(null);
         updateButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -155,7 +161,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         removeButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        removeButton.setForeground(new java.awt.Color(50, 110, 211));
+        removeButton.setForeground(new java.awt.Color(255, 255, 255));
         removeButton.setText("remove");
         removeButton.setBorder(null);
         removeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -168,7 +174,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         clearButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        clearButton.setForeground(new java.awt.Color(50, 110, 211));
+        clearButton.setForeground(new java.awt.Color(255, 255, 255));
         clearButton.setText("clear");
         clearButton.setBorder(null);
         clearButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -181,7 +187,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         executeScriptButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        executeScriptButton.setForeground(new java.awt.Color(50, 110, 211));
+        executeScriptButton.setForeground(new java.awt.Color(255, 255, 255));
         executeScriptButton.setText("execute script");
         executeScriptButton.setBorder(null);
         executeScriptButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -194,7 +200,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         removeLowerButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        removeLowerButton.setForeground(new java.awt.Color(50, 110, 211));
+        removeLowerButton.setForeground(new java.awt.Color(255, 255, 255));
         removeLowerButton.setText("remove lower");
         removeLowerButton.setBorder(null);
         removeLowerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -207,7 +213,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         replaceIfGreaterButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        replaceIfGreaterButton.setForeground(new java.awt.Color(50, 110, 211));
+        replaceIfGreaterButton.setForeground(new java.awt.Color(255, 255, 255));
         replaceIfGreaterButton.setText("replace if greater");
         replaceIfGreaterButton.setBorder(null);
         replaceIfGreaterButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -220,7 +226,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         removeGreaterButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        removeGreaterButton.setForeground(new java.awt.Color(50, 110, 211));
+        removeGreaterButton.setForeground(new java.awt.Color(255, 255, 255));
         removeGreaterButton.setText("remove greater");
         removeGreaterButton.setBorder(null);
         removeGreaterButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -233,7 +239,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         countImpactSpeedButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        countImpactSpeedButton.setForeground(new java.awt.Color(50, 110, 211));
+        countImpactSpeedButton.setForeground(new java.awt.Color(255, 255, 255));
         countImpactSpeedButton.setText("count impact speed");
         countImpactSpeedButton.setBorder(null);
         countImpactSpeedButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -246,7 +252,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         filterCarButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        filterCarButton.setForeground(new java.awt.Color(50, 110, 211));
+        filterCarButton.setForeground(new java.awt.Color(255, 255, 255));
         filterCarButton.setText("filter car");
         filterCarButton.setBorder(null);
         filterCarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -259,7 +265,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         });
 
         uniqieMoodButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        uniqieMoodButton.setForeground(new java.awt.Color(50, 110, 211));
+        uniqieMoodButton.setForeground(new java.awt.Color(255, 255, 255));
         uniqieMoodButton.setText("unique mood");
         uniqieMoodButton.setBorder(null);
         uniqieMoodButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
@@ -303,9 +309,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
                             .addComponent(uniqieMoodButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
-            .addGroup(commandsButtonsPanelLayout.createSequentialGroup()
-                .addComponent(emptyResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addComponent(emptyResetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         commandsButtonsPanelLayout.setVerticalGroup(
             commandsButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -339,7 +343,8 @@ public class ApplicationWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(uniqieMoodButton)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(emptyResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 112, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addComponent(emptyResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -347,29 +352,31 @@ public class ApplicationWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(usernameIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 180, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(usernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(interactionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 606, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(interactionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(interactionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(usernameLabel)
+                        .addGap(18, 18, 18))
+                    .addGroup(layout.createSequentialGroup()
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(usernameIconLabel)
-                            .addComponent(usernameLabel))))
-                .addContainerGap())
+                        .addComponent(usernameIconLabel)
+                        .addContainerGap(12, Short.MAX_VALUE))))
+            .addComponent(interactionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         pack();
@@ -377,7 +384,26 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
-        // TODO add your handling code here:
+        interactionPanel.removeAll();
+        interactionPanel.setLayout(new BoxLayout(interactionPanel, BoxLayout.Y_AXIS));
+
+        TextCommandPanel infoPanel = new TextCommandPanel();
+        infoPanel.setVisible(true);
+        interactionPanel.add(infoPanel);
+
+        // sending command request
+        commandSender.sendCommand(new InfoCommand());
+
+        // receiving command response
+        try {
+            String responseText = commandResponseReceiver.receiveCommandResponse();
+            infoPanel.setText(responseText);
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
+
+        revalidate();
+        repaint();
     }//GEN-LAST:event_infoButtonActionPerformed
 
 
@@ -391,7 +417,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.removeAll();
         interactionPanel.setLayout(new BoxLayout(interactionPanel, BoxLayout.Y_AXIS));
 
-        HelpPanel helpPanel = new HelpPanel();
+        TextCommandPanel helpPanel = new TextCommandPanel();
         helpPanel.setVisible(true);
         interactionPanel.add(helpPanel);
 
@@ -401,7 +427,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         // receiving command response
         try {
             String responseText = commandResponseReceiver.receiveCommandResponse();
-            helpPanel.setText(("<html>" + responseText + "</html>").replace("\n", "<br>"));
+            helpPanel.setText(responseText);
         } catch (Exception e) {
             System.out.println(e.getMessage());
         }
@@ -469,7 +495,22 @@ public class ApplicationWindow extends javax.swing.JFrame {
     private void emptyResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emptyResetButtonActionPerformed
 
         interactionPanel.removeAll();
-        interactionPanel.add(pigImagePanel);
+
+        javax.swing.GroupLayout interactionPanelLayout = new javax.swing.GroupLayout(interactionPanel);
+        interactionPanel.setLayout(interactionPanelLayout);
+        interactionPanelLayout.setHorizontalGroup(
+                interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interactionPanelLayout.createSequentialGroup()
+                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(85, 85, 85))
+        );
+        interactionPanelLayout.setVerticalGroup(
+                interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(interactionPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+        );
 
         revalidate();
         repaint();
