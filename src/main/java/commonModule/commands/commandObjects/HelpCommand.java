@@ -39,19 +39,22 @@ public class HelpCommand extends CommandTemplate implements CommandWithResponse 
 
         commands.forEach((key, value) -> {
 
-            output.append(ConsoleColors.GREEN);
+            // output.append(ConsoleColors.GREEN);
             for (int i = 0; i < key.length(); i++) {
                 char letter = key.charAt(i);
 
                 if (letter == '<') {
-                    output.append(letter).append(ConsoleColors.PURPLE);
+                    // output.append(letter).append(ConsoleColors.PURPLE);
+                    output.append(letter);
                 } else if (letter == '>') {
-                    output.append(ConsoleColors.GREEN).append(letter);
+                    // output.append(ConsoleColors.GREEN).append(letter);
+                    output.append(letter);
                 } else {
                     output.append(letter);
                 }
             }
-            output.append(ConsoleColors.RESET + ": ").append(value).append("\n");
+//            output.append(ConsoleColors.RESET + ": ").append(value).append("\n");
+            output.append(": ").append(value).append("\n");
         });
         output.append("\n");
     }
