@@ -37,26 +37,29 @@ public class HelpCommand extends CommandTemplate implements CommandWithResponse 
 
         output = new StringBuilder();
 
-        commands.forEach((key, value) -> {
+        output.append("<html>");
 
-            // output.append(ConsoleColors.GREEN);
+        commands.forEach((key, value) -> {
+            output.append("<span style=\"color: green;\">");
+
             for (int i = 0; i < key.length(); i++) {
                 char letter = key.charAt(i);
 
                 if (letter == '<') {
-                    // output.append(letter).append(ConsoleColors.PURPLE);
-                    output.append(letter);
+                    output.append("&lt;<span style=\"color: purple;\">");
                 } else if (letter == '>') {
-                    // output.append(ConsoleColors.GREEN).append(letter);
-                    output.append(letter);
+                    output.append("</span><span style=\"color: green;\">&gt;</span>");
                 } else {
                     output.append(letter);
                 }
             }
-//            output.append(ConsoleColors.RESET + ": ").append(value).append("\n");
-            output.append(": ").append(value).append("\n");
+
+            output.append("</span>: ").append(value).append("<br>");
         });
-        output.append("\n");
+
+        output.append("<br>");
+        output.append("</html>");
+        System.out.println(output);
     }
 
     @Override

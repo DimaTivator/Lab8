@@ -38,11 +38,11 @@ public class InfoCommand extends CommandTemplate implements CommandWithResponse 
 
         CollectionManager collectionManager = getCollectionManager();
 
-        output.append(ConsoleColors.GREEN + "Collection type: " + ConsoleColors.RESET).append(collectionManager.getCollection().getClass()).append("\n");
-
-        output.append(ConsoleColors.GREEN + "Date of initialization: " + ConsoleColors.RESET).append(collectionManager.getCreationDate()).append("\n");
-
-        output.append(ConsoleColors.GREEN + "Number of elements in collection: " + ConsoleColors.RESET).append(collectionManager.getCollection().size()).append("\n");
+        output.append("<html>");
+        output.append("<p><span style='color:green;'>Collection type:</span> ").append(collectionManager.getCollection().getClass()).append("<br>");
+        output.append("<p><span style='color:green;'>Date of initialization:</span> ").append(collectionManager.getCreationDate()).append("<br>");
+        output.append("<p><span style='color:green;'>Number of elements in collection:</span> ").append(collectionManager.getCollection().size()).append("<br>");
+        output.append("</html>");
     }
 
     @Override
