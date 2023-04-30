@@ -1,22 +1,25 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
- */
 package client.gui;
 
 import client.Authenticator;
+import client.gui.graphics.DotIcon;
 import commonModule.exceptions.InvalidInputException;
 import commonModule.exceptions.serverExceptions.ServerIsDownException;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
+
+import javax.swing.*;
+import java.awt.*;
+import java.awt.font.TextAttribute;
+import java.util.Collections;
+import java.util.Objects;
 
 public class AuthenticationWindow extends javax.swing.JFrame {
 
     private final Authenticator authenticator;
+    private final ApplicationWindow applicationWindow;
 
 
-    public AuthenticationWindow(Authenticator authenticator) {
+    public AuthenticationWindow(Authenticator authenticator, ApplicationWindow applicationWindow) {
         this.authenticator = authenticator;
+        this.applicationWindow = applicationWindow;
 
         initComponents();
         txtUsername.setBackground(new java.awt.Color(0, 0, 0, 1));
@@ -98,7 +101,7 @@ public class AuthenticationWindow extends javax.swing.JFrame {
         txtPassword.setFont(txtPassword.getFont());
         txtPassword.setForeground(new java.awt.Color(255, 255, 255));
         txtPassword.setBorder(null);
-        txtPassword.setCaretColor(new java.awt.Color(199, 216, 255));
+        txtPassword.setCaretColor(new java.awt.Color(199, 226, 255));
 
         logInButton.setFont(new java.awt.Font("Arial", 1, 14)); // NOI18N
         logInButton.setForeground(new java.awt.Color(50, 110, 211));
@@ -128,9 +131,9 @@ public class AuthenticationWindow extends javax.swing.JFrame {
             }
         });
 
-        usernameIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-male-user-24.png"))); // NOI18N
+        usernameIcon.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/pics/icons8-male-user-24.png")))); // NOI18N
 
-        passwordIcon.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-password-24.png"))); // NOI18N
+        passwordIcon.setIcon(new javax.swing.ImageIcon(Objects.requireNonNull(getClass().getResource("/pics/icons8-password-24.png")))); // NOI18N
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -229,6 +232,71 @@ public class AuthenticationWindow extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
+        // adding languages menu
+
+        JMenuBar menuBar = new JMenuBar();
+
+        Font font = new Font("Arial", Font.PLAIN, 12);
+
+        menuBar.setFont(font);
+        menuBar.setBorderPainted(false);
+        menuBar.setLayout(new BoxLayout(menuBar, BoxLayout.X_AXIS));
+        menuBar.setForeground(new java.awt.Color(50, 110, 211));
+
+        JMenu languageMenu = new JMenu("Language");
+
+
+        JCheckBoxMenuItem russianMenuItem = new JCheckBoxMenuItem("Русский");
+        russianMenuItem.setFont(font);
+
+        JCheckBoxMenuItem ukraineMenuItem = new JCheckBoxMenuItem("Украинский");
+        ukraineMenuItem.setFont(font);
+
+        JCheckBoxMenuItem spanishMenuItem = new JCheckBoxMenuItem("Испанский");
+        spanishMenuItem.setFont(font);
+
+        JCheckBoxMenuItem islandMenuItem = new JCheckBoxMenuItem("Исландский");
+        islandMenuItem.setFont(font);
+
+        russianMenuItem.addActionListener(event -> {
+            russianMenuItem.setSelected(true);
+            ukraineMenuItem.setSelected(false);
+            spanishMenuItem.setSelected(false);
+            islandMenuItem.setSelected(false);
+        });
+
+        ukraineMenuItem.addActionListener(event -> {
+            russianMenuItem.setSelected(false);
+            ukraineMenuItem.setSelected(true);
+            spanishMenuItem.setSelected(false);
+            islandMenuItem.setSelected(false);
+        });
+
+        spanishMenuItem.addActionListener(event -> {
+            russianMenuItem.setSelected(false);
+            ukraineMenuItem.setSelected(false);
+            spanishMenuItem.setSelected(true);
+            islandMenuItem.setSelected(false);
+        });
+
+        islandMenuItem.addActionListener(event -> {
+            russianMenuItem.setSelected(false);
+            ukraineMenuItem.setSelected(false);
+            spanishMenuItem.setSelected(false);
+            islandMenuItem.setSelected(true);
+        });
+
+        russianMenuItem.setSelected(true);
+
+        languageMenu.add(russianMenuItem);
+        languageMenu.add(ukraineMenuItem);
+        languageMenu.add(spanishMenuItem);
+        languageMenu.add(islandMenuItem);
+
+        menuBar.add(languageMenu);
+
+        setJMenuBar(menuBar);
+
         pack();
     }// </editor-fold>
 
@@ -244,6 +312,7 @@ public class AuthenticationWindow extends javax.swing.JFrame {
         authenticator.logIn(login, password);
         if (checkAuthentication()) {
             this.dispose();
+            applicationWindow.setVisible(true);
         }
     }
 
@@ -255,6 +324,7 @@ public class AuthenticationWindow extends javax.swing.JFrame {
         authenticator.register(login, password);
         if (checkAuthentication()) {
             this.dispose();
+            applicationWindow.setVisible(true);
         }
     }
 
