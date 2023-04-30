@@ -1,6 +1,8 @@
 package client.gui;
 
 import client.Authenticator;
+import client.CommandResponseReceiver;
+import client.CommandSender;
 import client.gui.graphics.DotIcon;
 import commonModule.exceptions.InvalidInputException;
 import commonModule.exceptions.serverExceptions.ServerIsDownException;
@@ -14,12 +16,15 @@ import java.util.Objects;
 public class AuthenticationWindow extends javax.swing.JFrame {
 
     private final Authenticator authenticator;
-    private final ApplicationWindow applicationWindow;
+    private final CommandResponseReceiver commandResponseReceiver;
+    private final CommandSender commandSender;
 
 
-    public AuthenticationWindow(Authenticator authenticator, ApplicationWindow applicationWindow) {
+    public AuthenticationWindow(Authenticator authenticator, CommandSender commandSender, CommandResponseReceiver commandResponseReceiver) {
+
         this.authenticator = authenticator;
-        this.applicationWindow = applicationWindow;
+        this.commandSender = commandSender;
+        this.commandResponseReceiver = commandResponseReceiver;
 
         initComponents();
         txtUsername.setBackground(new java.awt.Color(0, 0, 0, 1));
@@ -312,7 +317,7 @@ public class AuthenticationWindow extends javax.swing.JFrame {
         authenticator.logIn(login, password);
         if (checkAuthentication()) {
             this.dispose();
-            applicationWindow.setVisible(true);
+            new ApplicationWindow(authenticator, commandSender, commandResponseReceiver).setVisible(true);
         }
     }
 
@@ -324,7 +329,7 @@ public class AuthenticationWindow extends javax.swing.JFrame {
         authenticator.register(login, password);
         if (checkAuthentication()) {
             this.dispose();
-            applicationWindow.setVisible(true);
+            new ApplicationWindow(authenticator, commandSender, commandResponseReceiver).setVisible(true);
         }
     }
 
