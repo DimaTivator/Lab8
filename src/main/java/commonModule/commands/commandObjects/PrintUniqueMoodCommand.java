@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  PrintUniqueMoodCommand class is responsible for printing unique moods of the HumanBeing objects in the collection.
@@ -36,7 +37,6 @@ public class PrintUniqueMoodCommand extends CommandTemplate implements CommandWi
      Overridden method from the Command class. This method is called when the "print_unique_mood" command is executed.
      @throws EmptyCollectionException if the collection is empty
      */
-    @Override
     public void execute() throws EmptyCollectionException {
 
         output = new StringBuilder();
@@ -47,32 +47,28 @@ public class PrintUniqueMoodCommand extends CommandTemplate implements CommandWi
             throw new EmptyCollectionException();
         }
 
-        Map<Mood, Integer> moodsCounter = new HashMap<>();
+        Map<Mood, Long> moodsCounter = data.values().stream()
+                .collect(Collectors.groupingBy(HumanBeing::getMood, Collectors.counting()));
 
-        data.forEach((key, value) -> {
-            if (moodsCounter.containsKey(value.getMood())) {
-                moodsCounter.put(value.getMood(), moodsCounter.get(value.getMood()) + 1);
-            } else {
-                moodsCounter.put(value.getMood(), 1);
-            }
-        });
+        List<Mood> uniqueMoodList = moodsCounter.entrySet().stream()
+                .filter(entry -> entry.getValue() == 1)
+                .map(Map.Entry::getKey).toList();
 
-        List<Mood> uniqueMoodList = new ArrayList<>();
-
-        moodsCounter.forEach((key, value) -> {
-            if (value == 1) {
-                uniqueMoodList.add(key);
-            }
-        });
+        output.append("<html>");
 
         if (uniqueMoodList.isEmpty()) {
-            output.append("There is no unique moods in collection :(\n");
+            output.append("<p><span style='color:red;'>There is no unique moods in collection :(</span></p>");
         } else {
-            output.append(ConsoleColors.GREEN + "The list of unique moods of HumanBeing objects from the collection: " + ConsoleColors.RESET).append("\n");
+            output.append("<p><span style='color:green;'>The list of unique moods of HumanBeing objects from the collection:</span></p>");
+            output.append("<ul>");
+
             uniqueMoodList.forEach(x -> {
-                output.append(x).append("\n");
+                output.append("<li>").append(x).append("</li>");
             });
+
+            output.append("</ul>");
         }
+        output.append("</html>");
     }
 
     @Override
