@@ -15,10 +15,7 @@ import commonModule.commands.commandObjects.PrintUniqueMoodCommand;
 import javax.swing.*;
 import java.awt.*;
 
-/**
- *
- * @author dmitrii_andriianov
- */
+
 public class ApplicationWindow extends javax.swing.JFrame {
 
     private final CommandSender commandSender;
@@ -64,7 +61,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         removeGreaterButton = new javax.swing.JButton();
         countImpactSpeedButton = new javax.swing.JButton();
         filterCarButton = new javax.swing.JButton();
-        uniqieMoodButton = new javax.swing.JButton();
+        uniqueMoodButton = new javax.swing.JButton();
         emptyResetButton = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -83,199 +80,239 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.setLayout(interactionPanelLayout);
         interactionPanelLayout.setHorizontalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(interactionPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 590, Short.MAX_VALUE))
+            .addComponent(pigImagePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
         );
         interactionPanelLayout.setVerticalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(interactionPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE)
+                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
         );
 
         commandsButtonsPanel.setBackground(new java.awt.Color(50, 110, 211));
 
-        helpButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        helpButton.setBackground(new java.awt.Color(246, 246, 246));
+        helpButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         helpButton.setForeground(new java.awt.Color(255, 255, 255));
+        helpButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-support-500.png"))); // NOI18N
         helpButton.setText("help");
         helpButton.setBorder(null);
         helpButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         helpButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        helpButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        helpButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        helpButton.setIconTextGap(14);
         helpButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 helpButtonActionPerformed(evt);
             }
         });
 
-        infoButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        infoButton.setBackground(new java.awt.Color(246, 246, 246));
+        infoButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         infoButton.setForeground(new java.awt.Color(255, 255, 255));
+        infoButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-info-512.png"))); // NOI18N
         infoButton.setText("info");
         infoButton.setBorder(null);
         infoButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         infoButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        infoButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        infoButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        infoButton.setIconTextGap(14);
         infoButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 infoButtonActionPerformed(evt);
             }
         });
 
-        showButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        showButton.setBackground(new java.awt.Color(246, 246, 246));
+        showButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         showButton.setForeground(new java.awt.Color(255, 255, 255));
+        showButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/eye-512.png"))); // NOI18N
         showButton.setText("show");
         showButton.setBorder(null);
         showButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         showButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        showButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        showButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        showButton.setIconTextGap(9);
         showButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 showButtonActionPerformed(evt);
             }
         });
 
-        insertButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        insertButton.setBackground(new java.awt.Color(246, 246, 246));
+        insertButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         insertButton.setForeground(new java.awt.Color(255, 255, 255));
+        insertButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-add-100.png"))); // NOI18N
         insertButton.setText("insert");
         insertButton.setBorder(null);
         insertButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         insertButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        insertButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        insertButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        insertButton.setIconTextGap(14);
         insertButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 insertButtonActionPerformed(evt);
             }
         });
 
-        updateButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        updateButton.setBackground(new java.awt.Color(246, 246, 246));
+        updateButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         updateButton.setForeground(new java.awt.Color(255, 255, 255));
+        updateButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-refresh-480.png"))); // NOI18N
         updateButton.setText("update");
         updateButton.setBorder(null);
         updateButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         updateButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        updateButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        updateButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        updateButton.setIconTextGap(14);
         updateButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 updateButtonActionPerformed(evt);
             }
         });
 
-        removeButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        removeButton.setBackground(new java.awt.Color(246, 246, 246));
+        removeButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         removeButton.setForeground(new java.awt.Color(255, 255, 255));
+        removeButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-delete-384.png"))); // NOI18N
         removeButton.setText("remove");
         removeButton.setBorder(null);
         removeButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         removeButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        removeButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        removeButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        removeButton.setIconTextGap(14);
         removeButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeButtonActionPerformed(evt);
             }
         });
 
-        clearButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        clearButton.setBackground(new java.awt.Color(246, 246, 246));
+        clearButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         clearButton.setForeground(new java.awt.Color(255, 255, 255));
+        clearButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-erase-96.png"))); // NOI18N
         clearButton.setText("clear");
         clearButton.setBorder(null);
         clearButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         clearButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        clearButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        clearButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        clearButton.setIconTextGap(14);
         clearButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 clearButtonActionPerformed(evt);
             }
         });
 
-        executeScriptButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        executeScriptButton.setBackground(new java.awt.Color(246, 246, 246));
+        executeScriptButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         executeScriptButton.setForeground(new java.awt.Color(255, 255, 255));
+        executeScriptButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-monitor-96.png"))); // NOI18N
         executeScriptButton.setText("execute script");
         executeScriptButton.setBorder(null);
         executeScriptButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         executeScriptButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        executeScriptButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        executeScriptButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        executeScriptButton.setIconTextGap(14);
         executeScriptButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 executeScriptButtonActionPerformed(evt);
             }
         });
 
-        removeLowerButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        removeLowerButton.setBackground(new java.awt.Color(246, 246, 246));
+        removeLowerButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         removeLowerButton.setForeground(new java.awt.Color(255, 255, 255));
+        removeLowerButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-remove-delivery-100.png"))); // NOI18N
         removeLowerButton.setText("remove lower");
         removeLowerButton.setBorder(null);
         removeLowerButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         removeLowerButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        removeLowerButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        removeLowerButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        removeLowerButton.setIconTextGap(14);
         removeLowerButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeLowerButtonActionPerformed(evt);
             }
         });
 
-        replaceIfGreaterButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        replaceIfGreaterButton.setBackground(new java.awt.Color(246, 246, 246));
+        replaceIfGreaterButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         replaceIfGreaterButton.setForeground(new java.awt.Color(255, 255, 255));
+        replaceIfGreaterButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-replace-100.png"))); // NOI18N
         replaceIfGreaterButton.setText("replace if greater");
         replaceIfGreaterButton.setBorder(null);
         replaceIfGreaterButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         replaceIfGreaterButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        replaceIfGreaterButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        replaceIfGreaterButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        replaceIfGreaterButton.setIconTextGap(14);
         replaceIfGreaterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 replaceIfGreaterButtonActionPerformed(evt);
             }
         });
 
-        removeGreaterButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        removeGreaterButton.setBackground(new java.awt.Color(246, 246, 246));
+        removeGreaterButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         removeGreaterButton.setForeground(new java.awt.Color(255, 255, 255));
+        removeGreaterButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-clear-symbol-100.png"))); // NOI18N
         removeGreaterButton.setText("remove greater");
         removeGreaterButton.setBorder(null);
         removeGreaterButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         removeGreaterButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        removeGreaterButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        removeGreaterButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        removeGreaterButton.setIconTextGap(14);
         removeGreaterButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 removeGreaterButtonActionPerformed(evt);
             }
         });
 
-        countImpactSpeedButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        countImpactSpeedButton.setBackground(new java.awt.Color(246, 246, 246));
+        countImpactSpeedButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         countImpactSpeedButton.setForeground(new java.awt.Color(255, 255, 255));
+        countImpactSpeedButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-7-100.png"))); // NOI18N
         countImpactSpeedButton.setText("count impact speed");
         countImpactSpeedButton.setBorder(null);
         countImpactSpeedButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         countImpactSpeedButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        countImpactSpeedButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        countImpactSpeedButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        countImpactSpeedButton.setIconTextGap(14);
         countImpactSpeedButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 countImpactSpeedButtonActionPerformed(evt);
             }
         });
 
-        filterCarButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        filterCarButton.setBackground(new java.awt.Color(246, 246, 246));
+        filterCarButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         filterCarButton.setForeground(new java.awt.Color(255, 255, 255));
+        filterCarButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-car-100.png"))); // NOI18N
         filterCarButton.setText("filter car");
         filterCarButton.setBorder(null);
         filterCarButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         filterCarButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        filterCarButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
+        filterCarButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        filterCarButton.setIconTextGap(14);
         filterCarButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 filterCarButtonActionPerformed(evt);
             }
         });
 
-        uniqieMoodButton.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        uniqieMoodButton.setForeground(new java.awt.Color(255, 255, 255));
-        uniqieMoodButton.setText("unique mood");
-        uniqieMoodButton.setBorder(null);
-        uniqieMoodButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
-        uniqieMoodButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
-        uniqieMoodButton.setHorizontalTextPosition(javax.swing.SwingConstants.LEFT);
-        uniqieMoodButton.addActionListener(new java.awt.event.ActionListener() {
+        uniqueMoodButton.setBackground(new java.awt.Color(246, 246, 246));
+        uniqueMoodButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        uniqueMoodButton.setForeground(new java.awt.Color(255, 255, 255));
+        uniqueMoodButton.setIcon(new javax.swing.ImageIcon(getClass().getResource("/pics/icons8-depression-100.png"))); // NOI18N
+        uniqueMoodButton.setText("unique mood");
+        uniqueMoodButton.setBorder(null);
+        uniqueMoodButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        uniqueMoodButton.setHorizontalAlignment(javax.swing.SwingConstants.LEFT);
+        uniqueMoodButton.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        uniqueMoodButton.setIconTextGap(14);
+        uniqueMoodButton.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                uniqieMoodButtonActionPerformed(evt);
+                uniqueMoodButtonActionPerformed(evt);
             }
         });
 
@@ -290,9 +327,10 @@ public class ApplicationWindow extends javax.swing.JFrame {
         commandsButtonsPanel.setLayout(commandsButtonsPanelLayout);
         commandsButtonsPanelLayout.setHorizontalGroup(
             commandsButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(commandsButtonsPanelLayout.createSequentialGroup()
+            .addComponent(emptyResetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, commandsButtonsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(commandsButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(commandsButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(helpButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(infoButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(showButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -304,49 +342,44 @@ public class ApplicationWindow extends javax.swing.JFrame {
                     .addComponent(removeLowerButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(replaceIfGreaterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(removeGreaterButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(countImpactSpeedButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(filterCarButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addGroup(commandsButtonsPanelLayout.createSequentialGroup()
-                        .addGroup(commandsButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                            .addComponent(countImpactSpeedButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                            .addComponent(uniqieMoodButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                        .addGap(0, 0, Short.MAX_VALUE)))
+                    .addComponent(uniqueMoodButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
-            .addComponent(emptyResetButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
         commandsButtonsPanelLayout.setVerticalGroup(
             commandsButtonsPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(commandsButtonsPanelLayout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(helpButton)
+                .addComponent(helpButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(infoButton)
+                .addComponent(infoButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(showButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(showButton)
+                .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(insertButton)
+                .addComponent(updateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateButton)
+                .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(removeButton)
+                .addComponent(clearButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(clearButton)
+                .addComponent(executeScriptButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(executeScriptButton)
+                .addComponent(removeLowerButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(removeLowerButton)
+                .addComponent(replaceIfGreaterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(replaceIfGreaterButton)
+                .addComponent(removeGreaterButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(removeGreaterButton)
+                .addComponent(countImpactSpeedButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(countImpactSpeedButton)
+                .addComponent(filterCarButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(filterCarButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(uniqieMoodButton)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(emptyResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 90, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addComponent(uniqueMoodButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(1, 1, 1)
+                .addComponent(emptyResetButton, javax.swing.GroupLayout.PREFERRED_SIZE, 56, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -354,30 +387,27 @@ public class ApplicationWindow extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
                         .addContainerGap()
                         .addComponent(usernameIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(usernameLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-                    .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(interactionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
+                .addComponent(interactionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.PREFERRED_SIZE, 430, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(usernameLabel)
-                        .addGap(18, 18, 18))
-                    .addGroup(layout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(usernameIconLabel)
-                        .addContainerGap(12, Short.MAX_VALUE))))
+                    .addComponent(usernameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(usernameIconLabel, javax.swing.GroupLayout.Alignment.TRAILING))
+                .addContainerGap())
             .addComponent(interactionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
@@ -408,75 +438,113 @@ public class ApplicationWindow extends javax.swing.JFrame {
         repaint();
     }
 
+    private void resetButtonColors(JButton button) {
+
+        for (Component component : commandsButtonsPanel.getComponents()) {
+            component.setForeground(new Color(246, 246, 246));
+        }
+
+        if (button != null) {
+            button.setForeground(new Color(71, 199, 231));
+        }
+    }
+
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
         processTextCommand(new InfoCommand());
+
+        resetButtonColors(infoButton);
     }//GEN-LAST:event_infoButtonActionPerformed
 
 
     private void showButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(showButton);
     }//GEN-LAST:event_showButtonActionPerformed
 
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
         processTextCommand(new HelpCommand());
+
+        resetButtonColors(helpButton);
     }//GEN-LAST:event_helpButtonActionPerformed
 
 
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(insertButton);
     }//GEN-LAST:event_insertButtonActionPerformed
 
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(updateButton);
     }//GEN-LAST:event_updateButtonActionPerformed
 
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(removeButton);
     }//GEN-LAST:event_removeButtonActionPerformed
 
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(clearButton);
     }//GEN-LAST:event_clearButtonActionPerformed
 
 
     private void executeScriptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeScriptButtonActionPerformed
         // TODO add your handling code here:
+        resetButtonColors(executeScriptButton);
     }//GEN-LAST:event_executeScriptButtonActionPerformed
 
 
     private void removeLowerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeLowerButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(removeLowerButton);
     }//GEN-LAST:event_removeLowerButtonActionPerformed
 
 
     private void replaceIfGreaterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_replaceIfGreaterButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(replaceIfGreaterButton);
     }//GEN-LAST:event_replaceIfGreaterButtonActionPerformed
 
 
     private void removeGreaterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeGreaterButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(removeGreaterButton);
     }//GEN-LAST:event_removeGreaterButtonActionPerformed
 
 
     private void countImpactSpeedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countImpactSpeedButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(countImpactSpeedButton);
     }//GEN-LAST:event_countImpactSpeedButtonActionPerformed
 
 
     private void filterCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterCarButtonActionPerformed
         // TODO add your handling code here:
+
+        resetButtonColors(filterCarButton);
     }//GEN-LAST:event_filterCarButtonActionPerformed
 
 
-    private void uniqieMoodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uniqieMoodButtonActionPerformed
+    private void uniqueMoodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uniqueMoodButtonActionPerformed
         processTextCommand(new PrintUniqueMoodCommand());
-    }//GEN-LAST:event_uniqieMoodButtonActionPerformed
+
+        resetButtonColors(uniqueMoodButton);
+    }//GEN-LAST:event_uniqueMoodButtonActionPerformed
 
 
     private void emptyResetButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_emptyResetButtonActionPerformed
@@ -487,17 +555,19 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.setLayout(interactionPanelLayout);
         interactionPanelLayout.setHorizontalGroup(
                 interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interactionPanelLayout.createSequentialGroup()
-                                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 595, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(85, 85, 85))
+                        .addGroup(interactionPanelLayout.createSequentialGroup()
+                                .addContainerGap()
+                                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
         );
         interactionPanelLayout.setVerticalGroup(
                 interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(interactionPanelLayout.createSequentialGroup()
                                 .addContainerGap()
-                                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 0, Short.MAX_VALUE))
+                                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
+
+        resetButtonColors(null);
 
         revalidate();
         repaint();
@@ -522,7 +592,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
     private javax.swing.JButton removeLowerButton;
     private javax.swing.JButton replaceIfGreaterButton;
     private javax.swing.JButton showButton;
-    private javax.swing.JButton uniqieMoodButton;
+    private javax.swing.JButton uniqueMoodButton;
     private javax.swing.JButton updateButton;
     private javax.swing.JLabel usernameIconLabel;
     private javax.swing.JLabel usernameLabel;
