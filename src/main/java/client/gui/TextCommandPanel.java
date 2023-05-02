@@ -35,7 +35,14 @@ public class TextCommandPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        doneLabel1 = new javax.swing.JLabel();
         textLabel = new javax.swing.JLabel();
+        doneLabel = new javax.swing.JLabel();
+        doneLabel2 = new javax.swing.JLabel();
+        jLabel1 = new javax.swing.JLabel();
+
+        doneLabel1.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        doneLabel1.setForeground(new java.awt.Color(33, 209, 38));
 
         setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
 
@@ -44,6 +51,15 @@ public class TextCommandPanel extends javax.swing.JPanel {
         textLabel.setVerticalAlignment(javax.swing.SwingConstants.TOP);
         textLabel.setVerticalTextPosition(javax.swing.SwingConstants.TOP);
 
+        doneLabel.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        doneLabel.setForeground(new java.awt.Color(33, 209, 38));
+
+        doneLabel2.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        doneLabel2.setForeground(new java.awt.Color(33, 209, 38));
+
+        jLabel1.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        jLabel1.setForeground(new java.awt.Color(33, 209, 38));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
@@ -51,18 +67,48 @@ public class TextCommandPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(0, 6, Short.MAX_VALUE)
                 .addComponent(textLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 71, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(315, 315, 315)
+                    .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(316, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 0, Short.MAX_VALUE)
+                    .addComponent(doneLabel2)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
                 .addComponent(textLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 520, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(250, 250, 250)
+                    .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(298, Short.MAX_VALUE)))
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(0, 290, Short.MAX_VALUE)
+                    .addComponent(doneLabel2)
+                    .addGap(0, 290, Short.MAX_VALUE)))
         );
     }// </editor-fold>//GEN-END:initComponents
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel doneLabel;
+    private javax.swing.JLabel doneLabel1;
+    private javax.swing.JLabel doneLabel2;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel textLabel;
     // End of variables declaration//GEN-END:variables
 }
