@@ -43,6 +43,9 @@ public class ApplicationWindow extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        menuBar1 = new java.awt.MenuBar();
+        menu1 = new java.awt.Menu();
+        menu2 = new java.awt.Menu();
         usernameLabel = new javax.swing.JLabel();
         usernameIconLabel = new javax.swing.JLabel();
         interactionPanel = new javax.swing.JPanel();
@@ -64,6 +67,12 @@ public class ApplicationWindow extends javax.swing.JFrame {
         uniqueMoodButton = new javax.swing.JButton();
         emptyResetButton = new javax.swing.JButton();
 
+        menu1.setLabel("File");
+        menuBar1.add(menu1);
+
+        menu2.setLabel("Edit");
+        menuBar1.add(menu2);
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(222, 100, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
@@ -80,14 +89,14 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.setLayout(interactionPanelLayout);
         interactionPanelLayout.setHorizontalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pigImagePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 684, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interactionPanelLayout.createSequentialGroup()
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         interactionPanelLayout.setVerticalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(interactionPanelLayout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+            .addComponent(pigImagePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
         commandsButtonsPanel.setBackground(new java.awt.Color(50, 110, 211));
@@ -392,17 +401,16 @@ public class ApplicationWindow extends javax.swing.JFrame {
                         .addContainerGap()
                         .addComponent(usernameIconLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 109, Short.MAX_VALUE))
-                    .addGroup(layout.createSequentialGroup()
-                        .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)))
-                .addComponent(interactionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(interactionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(usernameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -416,6 +424,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
 
     private void processTextCommand(Command command) {
+
         interactionPanel.removeAll();
         interactionPanel.setLayout(new BoxLayout(interactionPanel, BoxLayout.Y_AXIS));
 
@@ -438,6 +447,20 @@ public class ApplicationWindow extends javax.swing.JFrame {
         repaint();
     }
 
+
+    private void showCommandInterface(JPanel panel) {
+
+        interactionPanel.removeAll();
+        interactionPanel.setLayout(new BoxLayout(interactionPanel, BoxLayout.Y_AXIS));
+
+        panel.setVisible(true);
+        interactionPanel.add(panel);
+
+        revalidate();
+        repaint();
+    }
+
+
     private void resetButtonColors(JButton button) {
 
         for (Component component : commandsButtonsPanel.getComponents()) {
@@ -451,9 +474,10 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
 
     private void infoButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_infoButtonActionPerformed
-        processTextCommand(new InfoCommand());
 
         resetButtonColors(infoButton);
+
+        processTextCommand(new InfoCommand());
     }//GEN-LAST:event_infoButtonActionPerformed
 
 
@@ -465,30 +489,37 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
 
     private void helpButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_helpButtonActionPerformed
-        processTextCommand(new HelpCommand());
 
         resetButtonColors(helpButton);
+
+        processTextCommand(new HelpCommand());
     }//GEN-LAST:event_helpButtonActionPerformed
 
 
     private void insertButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_insertButtonActionPerformed
-        // TODO add your handling code here:
 
         resetButtonColors(insertButton);
+
+        showCommandInterface(new CommandWithObjectPanel());
     }//GEN-LAST:event_insertButtonActionPerformed
 
 
     private void updateButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_updateButtonActionPerformed
-        // TODO add your handling code here:
 
         resetButtonColors(updateButton);
+
+        showCommandInterface(new CommandWithObjectPanel());
     }//GEN-LAST:event_updateButtonActionPerformed
 
 
     private void removeButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeButtonActionPerformed
-        // TODO add your handling code here:
 
         resetButtonColors(removeButton);
+
+        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel();
+        oneArgCommandPanel.getArgNameLabel().setText("key");
+
+        showCommandInterface(oneArgCommandPanel);
     }//GEN-LAST:event_removeButtonActionPerformed
 
 
@@ -500,43 +531,59 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
 
     private void executeScriptButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_executeScriptButtonActionPerformed
-        // TODO add your handling code here:
+
         resetButtonColors(executeScriptButton);
+
+        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel();
+        oneArgCommandPanel.getArgNameLabel().setText("script path");
+
+        showCommandInterface(oneArgCommandPanel);
     }//GEN-LAST:event_executeScriptButtonActionPerformed
 
 
     private void removeLowerButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeLowerButtonActionPerformed
-        // TODO add your handling code here:
 
         resetButtonColors(removeLowerButton);
+
+        showCommandInterface(new CommandWithObjectPanel());
     }//GEN-LAST:event_removeLowerButtonActionPerformed
 
 
     private void replaceIfGreaterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_replaceIfGreaterButtonActionPerformed
-        // TODO add your handling code here:
 
         resetButtonColors(replaceIfGreaterButton);
+
+        showCommandInterface(new CommandWithObjectPanel());
     }//GEN-LAST:event_replaceIfGreaterButtonActionPerformed
 
 
     private void removeGreaterButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_removeGreaterButtonActionPerformed
-        // TODO add your handling code here:
 
         resetButtonColors(removeGreaterButton);
+
+        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel();
+        oneArgCommandPanel.getArgNameLabel().setText("key");
+
+        showCommandInterface(oneArgCommandPanel);
     }//GEN-LAST:event_removeGreaterButtonActionPerformed
 
 
     private void countImpactSpeedButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_countImpactSpeedButtonActionPerformed
-        // TODO add your handling code here:
 
         resetButtonColors(countImpactSpeedButton);
+
+        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel();
+        oneArgCommandPanel.getArgNameLabel().setText("impact speed");
+
+        showCommandInterface(oneArgCommandPanel);
     }//GEN-LAST:event_countImpactSpeedButtonActionPerformed
 
 
     private void filterCarButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_filterCarButtonActionPerformed
-        // TODO add your handling code here:
 
         resetButtonColors(filterCarButton);
+
+        showCommandInterface(new FilterCarCommandPanel());
     }//GEN-LAST:event_filterCarButtonActionPerformed
 
 
@@ -586,6 +633,9 @@ public class ApplicationWindow extends javax.swing.JFrame {
     private javax.swing.JButton infoButton;
     private javax.swing.JButton insertButton;
     private javax.swing.JPanel interactionPanel;
+    private java.awt.Menu menu1;
+    private java.awt.Menu menu2;
+    private java.awt.MenuBar menuBar1;
     private javax.swing.JLabel pigImagePanel;
     private javax.swing.JButton removeButton;
     private javax.swing.JButton removeGreaterButton;
