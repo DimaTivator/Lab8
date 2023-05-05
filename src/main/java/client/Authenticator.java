@@ -30,6 +30,10 @@ public class Authenticator {
         return password;
     }
 
+    public boolean checkPassword(String password) {
+        return this.password.equals(encodePassword(password));
+    }
+
     /**
      * Method encodes password using the SHA-256 algorithm
      */

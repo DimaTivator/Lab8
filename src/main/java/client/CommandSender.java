@@ -13,6 +13,10 @@ public class CommandSender {
         this.authenticator = authenticator;
     }
 
+    public boolean checkPassword(String password) {
+        return authenticator.checkPassword(password);
+    }
+
     public void sendCommand(Command command) {
 
         CommandRequest request = new CommandRequest(command);
