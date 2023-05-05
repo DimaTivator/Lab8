@@ -9,6 +9,7 @@ import client.CommandResponseReceiver;
 import client.CommandSender;
 import commonModule.commands.Command;
 import commonModule.commands.commandObjects.*;
+import commonModule.exceptions.serverExceptions.ServerIsDownException;
 
 import javax.swing.*;
 import java.awt.*;
@@ -437,9 +438,9 @@ public class ApplicationWindow extends javax.swing.JFrame {
         // receiving command response
         try {
             String responseText = commandResponseReceiver.receiveCommandResponse();
-            textCommandPanel.setText(responseText);
-        } catch (Exception e) {
-            System.out.println(e.getMessage());
+            textCommandPanel.setText(responseText.replaceAll("LINE_BREAK", ""));
+        } catch (ServerIsDownException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
 
         revalidate();
@@ -530,7 +531,9 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
 
     private void clearButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_clearButtonActionPerformed
-        // TODO add your handling code here:
+
+        ClearCommandPanel clearCommandPanel = new ClearCommandPanel(commandSender, commandResponseReceiver);
+        showCommandInterface(clearCommandPanel);
 
         resetButtonColors(clearButton);
     }//GEN-LAST:event_clearButtonActionPerformed
@@ -541,6 +544,8 @@ public class ApplicationWindow extends javax.swing.JFrame {
         resetButtonColors(executeScriptButton);
 
         ExecuteScriptPanel executeScriptPanel = new ExecuteScriptPanel();
+        executeScriptPanel.setCommandSender(commandSender);
+        executeScriptPanel.setCommandResponseReceiver(commandResponseReceiver);
 
         showCommandInterface(executeScriptPanel);
     }//GEN-LAST:event_executeScriptButtonActionPerformed
@@ -596,7 +601,11 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(filterCarButton);
 
-        showCommandInterface(new FilterCarCommandPanel(commandSender, commandResponseReceiver));
+        FilterCarCommandPanel filterCarCommandPanel = new FilterCarCommandPanel(commandSender, commandResponseReceiver);
+        filterCarCommandPanel.setCommand(new FilterLessThanCarCommand());
+
+        showCommandInterface(filterCarCommandPanel);
+
     }//GEN-LAST:event_filterCarButtonActionPerformed
 
 
