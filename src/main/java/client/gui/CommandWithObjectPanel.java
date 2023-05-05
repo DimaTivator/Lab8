@@ -4,18 +4,38 @@
  */
 package client.gui;
 
-import javax.swing.*;
+import client.CommandResponseReceiver;
+import client.CommandSender;
+import commonModule.collectionClasses.*;
+import commonModule.commands.Command;
+import commonModule.dataStructures.network.CommandRequest;
+import commonModule.exceptions.InvalidCoordinatesException;
+import commonModule.exceptions.InvalidInputException;
+import commonModule.exceptions.commandExceptions.InvalidArgumentsException;
+import commonModule.exceptions.serverExceptions.ServerIsDownException;
+import commonModule.io.HumanBeingParser;
 
-/**
- *
- * @author dmitrii_andriianov
- */
+import javax.swing.*;
+import java.util.Objects;
+
+
 public class CommandWithObjectPanel extends javax.swing.JPanel {
+
+    private Command command;
+    private final CommandSender commandSender;
+    private final CommandResponseReceiver commandResponseReceiver;
+
+    public void setCommand(Command command) {
+        this.command = command;
+    }
 
     /**
      * Creates new form insertCommandPanel
      */
-    public CommandWithObjectPanel() {
+    public CommandWithObjectPanel(CommandSender commandSender, CommandResponseReceiver commandResponseReceiver) {
+        this.commandSender = commandSender;
+        this.commandResponseReceiver = commandResponseReceiver;
+
         initComponents();
     }
 
@@ -60,32 +80,33 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        keyTextField = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
-        jTextField2 = new javax.swing.JTextField();
+        nameTextField = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        jTextField3 = new javax.swing.JTextField();
+        coordinatesFieldName = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
         jLabel4 = new javax.swing.JLabel();
-        jTextField4 = new javax.swing.JTextField();
+        realHeroTextField = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        jTextField5 = new javax.swing.JTextField();
+        impactSpeedTextField = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        jTextField6 = new javax.swing.JTextField();
+        hasToothpickTextField = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        carNameTextField = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
-        jTextField8 = new javax.swing.JTextField();
+        coolTextField = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
-        jComboBox1 = new javax.swing.JComboBox<>();
-        jComboBox2 = new javax.swing.JComboBox<>();
+        moodComboBox = new javax.swing.JComboBox<>();
+        weaponComboBox = new javax.swing.JComboBox<>();
         jSeparator9 = new javax.swing.JSeparator();
         jSeparator10 = new javax.swing.JSeparator();
         jSeparator11 = new javax.swing.JSeparator();
         jLabel9 = new javax.swing.JLabel();
         jLabel10 = new javax.swing.JLabel();
+        sendButton = new javax.swing.JButton();
         doneLabel = new javax.swing.JLabel();
 
         jMenu1.setText("File");
@@ -140,6 +161,7 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         setPreferredSize(new java.awt.Dimension(678, 520));
 
         jPanel1.setBackground(new java.awt.Color(238, 238, 238));
+        jPanel1.setOpaque(false);
         jPanel1.setPreferredSize(new java.awt.Dimension(684, 520));
 
         jLabel1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
@@ -149,14 +171,14 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
 
         jSeparator1.setForeground(new java.awt.Color(50, 110, 211));
 
-        jTextField1.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField1.setBorder(null);
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        keyTextField.setBackground(new java.awt.Color(238, 238, 238));
+        keyTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        keyTextField.setForeground(new java.awt.Color(50, 110, 211));
+        keyTextField.setBorder(null);
+        keyTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        keyTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                keyTextFieldActionPerformed(evt);
             }
         });
 
@@ -165,14 +187,14 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jLabel2.setText("name");
         jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jTextField2.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField2.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField2.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField2.setBorder(null);
-        jTextField2.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField2.addActionListener(new java.awt.event.ActionListener() {
+        nameTextField.setBackground(new java.awt.Color(238, 238, 238));
+        nameTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        nameTextField.setForeground(new java.awt.Color(50, 110, 211));
+        nameTextField.setBorder(null);
+        nameTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        nameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField2ActionPerformed(evt);
+                nameTextFieldActionPerformed(evt);
             }
         });
 
@@ -181,14 +203,14 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jLabel3.setText("coordinates");
         jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jTextField3.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField3.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField3.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField3.setBorder(null);
-        jTextField3.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField3.addActionListener(new java.awt.event.ActionListener() {
+        coordinatesFieldName.setBackground(new java.awt.Color(238, 238, 238));
+        coordinatesFieldName.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        coordinatesFieldName.setForeground(new java.awt.Color(50, 110, 211));
+        coordinatesFieldName.setBorder(null);
+        coordinatesFieldName.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        coordinatesFieldName.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField3ActionPerformed(evt);
+                coordinatesFieldNameActionPerformed(evt);
             }
         });
 
@@ -199,14 +221,14 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jLabel4.setText("real hero (true / false)");
         jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jTextField4.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField4.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField4.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField4.setBorder(null);
-        jTextField4.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField4.addActionListener(new java.awt.event.ActionListener() {
+        realHeroTextField.setBackground(new java.awt.Color(238, 238, 238));
+        realHeroTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        realHeroTextField.setForeground(new java.awt.Color(50, 110, 211));
+        realHeroTextField.setBorder(null);
+        realHeroTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        realHeroTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField4ActionPerformed(evt);
+                realHeroTextFieldActionPerformed(evt);
             }
         });
 
@@ -215,14 +237,14 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jLabel5.setText("impact speed");
         jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jTextField5.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField5.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField5.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField5.setBorder(null);
-        jTextField5.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField5.addActionListener(new java.awt.event.ActionListener() {
+        impactSpeedTextField.setBackground(new java.awt.Color(238, 238, 238));
+        impactSpeedTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        impactSpeedTextField.setForeground(new java.awt.Color(50, 110, 211));
+        impactSpeedTextField.setBorder(null);
+        impactSpeedTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        impactSpeedTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField5ActionPerformed(evt);
+                impactSpeedTextFieldActionPerformed(evt);
             }
         });
 
@@ -231,14 +253,14 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jLabel6.setText("has toothpick (true / false)");
         jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jTextField6.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField6.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField6.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField6.setBorder(null);
-        jTextField6.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField6.addActionListener(new java.awt.event.ActionListener() {
+        hasToothpickTextField.setBackground(new java.awt.Color(238, 238, 238));
+        hasToothpickTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        hasToothpickTextField.setForeground(new java.awt.Color(50, 110, 211));
+        hasToothpickTextField.setBorder(null);
+        hasToothpickTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        hasToothpickTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField6ActionPerformed(evt);
+                hasToothpickTextFieldActionPerformed(evt);
             }
         });
 
@@ -249,14 +271,14 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jLabel7.setText("car name");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jTextField7.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField7.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField7.setBorder(null);
-        jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        carNameTextField.setBackground(new java.awt.Color(238, 238, 238));
+        carNameTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        carNameTextField.setForeground(new java.awt.Color(50, 110, 211));
+        carNameTextField.setBorder(null);
+        carNameTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        carNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                carNameTextFieldActionPerformed(evt);
             }
         });
 
@@ -267,32 +289,32 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jLabel8.setText("cool (true / false)");
         jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jTextField8.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField8.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField8.setBorder(null);
-        jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        coolTextField.setBackground(new java.awt.Color(238, 238, 238));
+        coolTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        coolTextField.setForeground(new java.awt.Color(50, 110, 211));
+        coolTextField.setBorder(null);
+        coolTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        coolTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                coolTextFieldActionPerformed(evt);
             }
         });
 
         jSeparator8.setForeground(new java.awt.Color(50, 110, 211));
 
-        jComboBox1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jComboBox1.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "sadness", "longing", "apathy", "rage" }));
-        jComboBox1.addActionListener(new java.awt.event.ActionListener() {
+        moodComboBox.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        moodComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "sadness", "longing", "apathy", "rage" }));
+        moodComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox1ActionPerformed(evt);
+                moodComboBoxActionPerformed(evt);
             }
         });
 
-        jComboBox2.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jComboBox2.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "axe", "knife", "rifle" }));
-        jComboBox2.addActionListener(new java.awt.event.ActionListener() {
+        weaponComboBox.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        weaponComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "axe", "knife", "rifle" }));
+        weaponComboBox.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jComboBox2ActionPerformed(evt);
+                weaponComboBoxActionPerformed(evt);
             }
         });
 
@@ -312,12 +334,22 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jLabel10.setText("weapon");
         jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
+        sendButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        sendButton.setForeground(new java.awt.Color(50, 110, 211));
+        sendButton.setText("Send");
+        sendButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(14, 14, 14)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jSeparator8)
@@ -326,15 +358,15 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
                         .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jTextField2)
-                        .addComponent(jTextField3)
-                        .addComponent(jTextField4)
-                        .addComponent(jTextField5)
-                        .addComponent(jTextField7)
-                        .addComponent(jTextField8))
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(nameTextField)
+                        .addComponent(coordinatesFieldName)
+                        .addComponent(realHeroTextField)
+                        .addComponent(impactSpeedTextField)
+                        .addComponent(carNameTextField)
+                        .addComponent(coolTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(keyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(hasToothpickTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -346,71 +378,77 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
                     .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(moodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(212, 212, 212))
+                    .addComponent(weaponComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(96, 96, 96)
+                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel1)
-                    .addComponent(jLabel9)
-                    .addComponent(jLabel10))
-                .addGap(6, 6, 6)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jComboBox2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(6, 6, 6)
-                .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(10, 10, 10)
-                .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField3, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField4, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel5)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(5, 5, 5)
-                .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jLabel6)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField6, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel1)
+                            .addComponent(jLabel9)
+                            .addComponent(jLabel10))
+                        .addGap(6, 6, 6)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(keyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                                .addComponent(moodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addComponent(weaponComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(6, 6, 6)
+                        .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(coordinatesFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel4)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(realHeroTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel5)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(impactSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(5, 5, 5)
+                        .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(jLabel6)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(hasToothpickTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(carNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(coolTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -439,52 +477,125 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField2ActionPerformed
+    private void nameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_nameTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField2ActionPerformed
+    }//GEN-LAST:event_nameTextFieldActionPerformed
 
-    private void jTextField3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField3ActionPerformed
+    private void coordinatesFieldNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coordinatesFieldNameActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField3ActionPerformed
+    }//GEN-LAST:event_coordinatesFieldNameActionPerformed
 
-    private void jTextField4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField4ActionPerformed
+    private void realHeroTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_realHeroTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField4ActionPerformed
+    }//GEN-LAST:event_realHeroTextFieldActionPerformed
 
-    private void jTextField5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField5ActionPerformed
+    private void impactSpeedTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_impactSpeedTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField5ActionPerformed
+    }//GEN-LAST:event_impactSpeedTextFieldActionPerformed
 
-    private void jTextField6ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField6ActionPerformed
+    private void hasToothpickTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_hasToothpickTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField6ActionPerformed
+    }//GEN-LAST:event_hasToothpickTextFieldActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void carNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carNameTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_carNameTextFieldActionPerformed
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void coolTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coolTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_coolTextFieldActionPerformed
 
-    private void jComboBox1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox1ActionPerformed
+    private void moodComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_moodComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox1ActionPerformed
+    }//GEN-LAST:event_moodComboBoxActionPerformed
 
-    private void jComboBox2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jComboBox2ActionPerformed
+    private void weaponComboBoxActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_weaponComboBoxActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jComboBox2ActionPerformed
+    }//GEN-LAST:event_weaponComboBoxActionPerformed
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void keyTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_keyTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_keyTextFieldActionPerformed
+
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+
+        HumanBeing humanBeing = new HumanBeing();
+
+        try {
+            command.setArgs(new String[]{keyTextField.getText()});
+
+            String name = HumanBeingParser.parseName(nameTextField.getText());
+            humanBeing.setName(name);
+
+            Coordinates coordinates = HumanBeingParser.parseCoordinates(coordinatesFieldName.getText());
+            humanBeing.setCoordinates(coordinates);
+
+        } catch (InvalidArgumentsException | InvalidInputException | InvalidCoordinatesException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return;
+        }
+
+        Mood mood = Mood.valueOf(Objects.requireNonNull(moodComboBox.getSelectedItem()).toString().toUpperCase());
+        humanBeing.setMood(mood);
+
+        WeaponType weaponType = WeaponType.valueOf(Objects.requireNonNull(weaponComboBox.getSelectedItem()).toString().toUpperCase());
+        humanBeing.setWeaponType(weaponType);
+
+        boolean realHero = Boolean.parseBoolean(realHeroTextField.getText());
+        humanBeing.setRealHero(realHero);
+
+        try {
+            double impactSpeed = Double.parseDouble(impactSpeedTextField.getText());
+            humanBeing.setImpactSpeed(impactSpeed);
+        } catch (NumberFormatException e) {
+            JOptionPane.showMessageDialog(null, "Impact speed must be a number");
+        }
+
+        boolean hasToothpick = Boolean.parseBoolean(hasToothpickTextField.getText());
+        humanBeing.setHasToothpick(hasToothpick);
+
+        Car car = null;
+
+        String carName = carNameTextField.getText();
+
+        if (carName != null && !carName.isEmpty()) {
+            car = new Car();
+            car.setName(carName);
+        }
+
+        if (coolTextField.getText() != null && !coolTextField.getText().isEmpty()) {
+            boolean cool = Boolean.parseBoolean(coolTextField.getText());
+            car = new Car();
+            car.setCool(cool);
+        }
+
+        humanBeing.setCar(car);
+
+        command.setValue(humanBeing);
+
+        commandSender.sendCommand(command);
+
+        try {
+            String response = commandResponseReceiver.receiveCommandResponse();
+            if (response.equals("Done!")) {
+                doneLabel.setText("Done!");
+            } else {
+                JOptionPane.showMessageDialog(null, response);
+            }
+        } catch (ServerIsDownException e) {
+            JOptionPane.showMessageDialog(null, "Server is down.\n Please try again later");
+        }
+    }//GEN-LAST:event_sendButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField carNameTextField;
+    private javax.swing.JTextField coolTextField;
+    private javax.swing.JTextField coordinatesFieldName;
     private javax.swing.JLabel doneLabel;
+    private javax.swing.JTextField hasToothpickTextField;
+    private javax.swing.JTextField impactSpeedTextField;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JComboBox<String> jComboBox1;
-    private javax.swing.JComboBox<String> jComboBox2;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel2;
@@ -524,17 +635,15 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
-    private javax.swing.JTextField jTextField1;
-    private javax.swing.JTextField jTextField2;
-    private javax.swing.JTextField jTextField3;
-    private javax.swing.JTextField jTextField4;
-    private javax.swing.JTextField jTextField5;
-    private javax.swing.JTextField jTextField6;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextField keyTextField;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;
+    private javax.swing.JComboBox<String> moodComboBox;
+    private javax.swing.JTextField nameTextField;
     private java.awt.PopupMenu popupMenu1;
+    private javax.swing.JTextField realHeroTextField;
+    private javax.swing.JButton sendButton;
+    private javax.swing.JComboBox<String> weaponComboBox;
     // End of variables declaration//GEN-END:variables
 }
