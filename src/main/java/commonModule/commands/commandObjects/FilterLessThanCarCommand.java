@@ -37,6 +37,9 @@ public class FilterLessThanCarCommand extends CommandTemplate implements Command
      */
     @Override
     public void execute() throws EmptyCollectionException {
+
+        output = new StringBuilder();
+
         Map<Long, HumanBeing> data = getCollectionManager().getCollection();
         Car car = (Car) getValue();
 
@@ -46,7 +49,7 @@ public class FilterLessThanCarCommand extends CommandTemplate implements Command
 
         boolean found = false;
         for (HumanBeing value : data.values()) {
-            if (value.getCar().compareTo(car) < 0) {
+            if (value.getCar() != null && value.getCar().compareTo(car) < 0) {
                 output.append(value.getCar()).append("\n");
                 found = true;
             }
