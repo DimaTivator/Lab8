@@ -565,7 +565,9 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
 
         if (coolTextField.getText() != null && !coolTextField.getText().isEmpty()) {
             boolean cool = Boolean.parseBoolean(coolTextField.getText());
-            car = new Car();
+            if (car == null) {
+                car = new Car();
+            }
             car.setCool(cool);
         }
 
