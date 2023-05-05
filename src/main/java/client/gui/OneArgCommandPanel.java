@@ -4,19 +4,37 @@
  */
 package client.gui;
 
+import client.CommandResponseReceiver;
+import client.CommandSender;
+import commonModule.commands.Command;
+import commonModule.exceptions.commandExceptions.InvalidArgumentsException;
+import commonModule.exceptions.serverExceptions.ServerIsDownException;
+
 import javax.swing.*;
 
-/**
- *
- * @author dmitrii_andriianov
- */
+
 public class OneArgCommandPanel extends javax.swing.JPanel {
+
+    private Command command;
+    private final CommandSender commandSender;
+    private final CommandResponseReceiver commandResponseReceiver;
+
+    public Command getCommand() {
+        return command;
+    }
+
+    public void setCommand(Command command) {
+        this.command = command;
+    }
 
     /**
      * Creates new form ExecuteScriptPanel
      */
-    public OneArgCommandPanel() {
+    public OneArgCommandPanel(CommandSender commandSender, CommandResponseReceiver commandResponseReceiver) {
         initComponents();
+
+        this.commandSender = commandSender;
+        this.commandResponseReceiver = commandResponseReceiver;
     }
 
     public JLabel getArgNameLabel() {
@@ -39,7 +57,8 @@ public class OneArgCommandPanel extends javax.swing.JPanel {
         jPanel1 = new javax.swing.JPanel();
         argNameLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
-        jTextField1 = new javax.swing.JTextField();
+        textField = new javax.swing.JTextField();
+        sendButton = new javax.swing.JButton();
         doneLabel = new javax.swing.JLabel();
 
         jPanel1.setPreferredSize(new java.awt.Dimension(684, 520));
@@ -50,14 +69,24 @@ public class OneArgCommandPanel extends javax.swing.JPanel {
 
         jSeparator1.setForeground(new java.awt.Color(50, 110, 211));
 
-        jTextField1.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField1.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField1.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField1.setBorder(null);
-        jTextField1.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField1.addActionListener(new java.awt.event.ActionListener() {
+        textField.setBackground(new java.awt.Color(238, 238, 238));
+        textField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        textField.setForeground(new java.awt.Color(50, 110, 211));
+        textField.setBorder(null);
+        textField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        textField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField1ActionPerformed(evt);
+                textFieldActionPerformed(evt);
+            }
+        });
+
+        sendButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        sendButton.setForeground(new java.awt.Color(50, 110, 211));
+        sendButton.setText("Send");
+        sendButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
             }
         });
 
@@ -66,23 +95,28 @@ public class OneArgCommandPanel extends javax.swing.JPanel {
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGap(27, 27, 27)
+                .addGap(16, 16, 16)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(argNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator1))
-                .addGap(496, 496, 496))
+                .addGap(378, 378, 378)
+                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(argNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(argNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 16, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(textField, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(459, Short.MAX_VALUE))
+                .addContainerGap(458, Short.MAX_VALUE))
         );
 
         doneLabel.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
@@ -110,9 +144,32 @@ public class OneArgCommandPanel extends javax.swing.JPanel {
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField1ActionPerformed
+    private void textFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_textFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField1ActionPerformed
+    }//GEN-LAST:event_textFieldActionPerformed
+
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+
+        try {
+            command.setArgs(new String[] { textField.getText() });
+        } catch (InvalidArgumentsException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+            return;
+        }
+
+        commandSender.sendCommand(command);
+
+        try {
+            String response = commandResponseReceiver.receiveCommandResponse();
+            if (response.equals("Done!")) {
+                doneLabel.setText("Done!");
+            } else {
+                JOptionPane.showMessageDialog(null, response);
+            }
+        } catch (ServerIsDownException e) {
+            JOptionPane.showMessageDialog(null, "Server is down.\n Please try again later");
+        }
+    }//GEN-LAST:event_sendButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -120,6 +177,7 @@ public class OneArgCommandPanel extends javax.swing.JPanel {
     private javax.swing.JLabel doneLabel;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JSeparator jSeparator1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JButton sendButton;
+    private javax.swing.JTextField textField;
     // End of variables declaration//GEN-END:variables
 }
