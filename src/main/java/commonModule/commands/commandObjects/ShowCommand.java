@@ -43,7 +43,7 @@ public class ShowCommand extends CommandTemplate implements CommandWithResponse 
             throw new EmptyCollectionException();
         }
 
-        data.forEach((key, value) -> output.append(key).append(":\n").append(value).append("\n"));
+        data.forEach((key, value) -> output.append(key).append(":LINE_BREAK").append(value).append("LINE_BREAK"));
         // System.out.println(output.toString());
     }
 
