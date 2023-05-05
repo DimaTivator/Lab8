@@ -38,11 +38,21 @@ public class InfoCommand extends CommandTemplate implements CommandWithResponse 
 
         CollectionManager collectionManager = getCollectionManager();
 
-        output.append("<html>");
-        output.append("<p><span style='color:green;'>Collection type:</span> ").append(collectionManager.getCollection().getClass()).append("<br>");
-        output.append("<p><span style='color:green;'>Date of initialization:</span> ").append(collectionManager.getCreationDate()).append("<br>");
-        output.append("<p><span style='color:green;'>Number of elements in collection:</span> ").append(collectionManager.getCollection().size()).append("<br>");
-        output.append("</html>");
+//        output.append("<html>");
+//        output.append("<body>");
+//        output.append("<p><span style='color:green;'>Collection type:</span> ").append(collectionManager.getCollection().getClass()).append("</p>");
+//        output.append("<p><span style='color:green;'>Date of initialization:</span> ").append(collectionManager.getCreationDate()).append("</p>");
+//        output.append("<p><span style='color:green;'>Number of elements in collection:</span> ").append(collectionManager.getCollection().size()).append("</p>");
+//        output.append("</body>");
+//        output.append("</html>");
+
+        output.append("<html><body><p><span style='color:green;'>Collection type:</span> ")
+                .append(collectionManager.getCollection().getClass() + "LINE_BREAK")
+                .append("</p><p><span style='color:green;'>Date of initialization:</span> ")
+                .append(collectionManager.getCreationDate() + "LINE_BREAK")
+                .append("</p><p><span style='color:green;'>Number of elements in collection:</span> ")
+                .append(collectionManager.getCollection().size() + "LINE_BREAK").append("</p></body></html>");
+
     }
 
     @Override

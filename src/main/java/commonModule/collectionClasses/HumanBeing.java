@@ -267,7 +267,7 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
     }
 
     private String fieldToString(String valueName, Object value) {
-        return ConsoleColors.GREEN + valueName + ConsoleColors.RESET + ": " + value + "\n";
+        return valueName + ": " + value + "LINE_BREAK";
     }
 
     /**
@@ -277,7 +277,7 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
     @Override
     public String toString() {
 
-        return ConsoleColors.GREEN + "HumanBeing object" + ConsoleColors.RESET + ":\n" +
+        return "HumanBeing object" + ":\n" +
                 fieldToString("id", id) +
                 fieldToString("name", name) +
                 fieldToString("coordinates", coordinates) +

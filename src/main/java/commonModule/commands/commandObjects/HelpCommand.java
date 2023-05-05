@@ -54,9 +54,10 @@ public class HelpCommand extends CommandTemplate implements CommandWithResponse 
                 }
             }
 
-            output.append("</span>: ").append(value).append("<br>");
+            output.append("</span>: ").append(value).append("LINE_BREAK").append("<br>");
         });
 
+        output.append("LINE_BREAK");
         output.append("<br>");
         output.append("</html>");
     }
