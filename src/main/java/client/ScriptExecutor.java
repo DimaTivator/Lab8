@@ -2,20 +2,33 @@ package client;
 
 
 import commonModule.auxiliaryClasses.ConsoleColors;
+import commonModule.commands.Command;
 import commonModule.dataStructures.network.CommandRequest;
 import commonModule.dataStructures.network.CommandResponse;
 import commonModule.dataStructures.network.Request;
 import commonModule.dataStructures.Triplet;
 import commonModule.exceptions.InvalidCoordinatesException;
+import commonModule.exceptions.InvalidInputException;
 import commonModule.exceptions.ScriptsRecursionException;
 import commonModule.exceptions.commandExceptions.InvalidArgumentsException;
 import commonModule.exceptions.commandExceptions.NoSuchCommandException;
+import commonModule.exceptions.serverExceptions.ServerIsDownException;
 import commonModule.io.consoleIO.CommandParser;
 
+import javax.swing.*;
+import javax.swing.text.BadLocationException;
+import java.io.EOFException;
 import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
+
+import org.jsoup.Jsoup;
+import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
+import org.jsoup.select.Elements;
 
 /**
  * The {@code ScriptExecutor} class provides the functionality to execute commands from a script file.
@@ -29,12 +42,13 @@ public class ScriptExecutor {
     /**
      * Executes the commands from the script file located at the given file path.
      */
-    public void executeScript(String filePath, NetworkProvider networkProvider, Authenticator authenticator) throws Exception {
+    public void executeScript(String filePath, CommandSender commandSender,
+                              CommandResponseReceiver commandResponseReceiver, JTextArea resultTextField) throws ScriptsRecursionException, ServerIsDownException, FileNotFoundException {
 
         File file = new File(filePath);
         Scanner scanner = new Scanner(file);
         CommandParser commandParser = new CommandParser();
-        CommandRequest request;
+
 
         usedScripts.add(filePath);
 
@@ -50,31 +64,33 @@ public class ScriptExecutor {
                         throw new ScriptsRecursionException("You should not call execute_script recursively!");
                     }
                     usedScripts.add(args[0]);
-                    executeScript(args[0], networkProvider, authenticator);
+                    executeScript(args[0], commandSender, commandResponseReceiver, resultTextField);
                 }
                 else {
-                    request = new CommandRequest(commandParser.pack(parsedCommand));
-                    request.setLogin(authenticator.getLogin());
-                    request.setPassword(authenticator.getPassword());
-                    networkProvider.send(request);
+                    Command command = commandParser.pack(parsedCommand);
+                    commandSender.sendCommand(command);
 
-                    CommandResponse response = (CommandResponse) networkProvider.receive();
+                    String response = commandResponseReceiver.receiveCommandResponse();
 
                     if (response == null) {
-                        System.out.println(ConsoleColors.RED + "Server is down :(\nPlease try again later" + ConsoleColors.RESET);
+                        throw new ServerIsDownException();
                     } else {
-                        System.out.println(response.getOutput());
+                        resultTextField.append(Jsoup.parse(response).text().replaceAll("LINE_BREAK", "\n") + '\n');
                     }
                 }
 
             } catch (ScriptsRecursionException | NoSuchCommandException | InvalidArgumentsException |
-                     InvalidCoordinatesException e) {
-                System.out.println(e.getMessage());
+                     InvalidCoordinatesException | InvalidInputException e) {
 
+                resultTextField.append(e.getMessage() + '\n');
+
+            } catch (ServerIsDownException e) {
+                throw e;
             } catch (Exception e) {
                 break;
             }
         }
+
         usedScripts.clear();
     }
 }
