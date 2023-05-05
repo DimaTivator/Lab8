@@ -4,23 +4,41 @@
  */
 package client.gui;
 
+import client.CommandResponseReceiver;
+import client.CommandSender;
+import commonModule.collectionClasses.Car;
+import commonModule.commands.Command;
+import commonModule.exceptions.serverExceptions.ServerIsDownException;
+
 import javax.swing.*;
 
-/**
- *
- * @author dmitrii_andriianov
- */
+
 public class FilterCarCommandPanel extends javax.swing.JPanel {
+
+    private Command command;
+    private final CommandSender commandSender;
+    private final CommandResponseReceiver commandResponseReceiver;
 
     /**
      * Creates new form FilterCarCommandPanel
      */
-    public FilterCarCommandPanel() {
+    public FilterCarCommandPanel(CommandSender commandSender, CommandResponseReceiver commandResponseReceiver) {
         initComponents();
+
+        this.commandSender = commandSender;
+        this.commandResponseReceiver = commandResponseReceiver;
     }
 
     public JLabel getDoneLabel() {
         return doneLabel;
+    }
+
+    public Command getCommand() {
+        return command;
+    }
+
+    public void setCommand(Command command) {
+        this.command = command;
     }
 
     /**
@@ -32,22 +50,25 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
-        jTextField8 = new javax.swing.JTextField();
+        coolTextField = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         jLabel7 = new javax.swing.JLabel();
-        jTextField7 = new javax.swing.JTextField();
+        carNameTextField = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
         jLabel8 = new javax.swing.JLabel();
         doneLabel = new javax.swing.JLabel();
+        sendButton = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        resultTextPanel = new javax.swing.JTextArea();
 
-        jTextField8.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField8.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField8.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField8.setBorder(null);
-        jTextField8.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField8.addActionListener(new java.awt.event.ActionListener() {
+        coolTextField.setBackground(new java.awt.Color(238, 238, 238));
+        coolTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        coolTextField.setForeground(new java.awt.Color(50, 110, 211));
+        coolTextField.setBorder(null);
+        coolTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        coolTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField8ActionPerformed(evt);
+                coolTextFieldActionPerformed(evt);
             }
         });
 
@@ -58,14 +79,14 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
         jLabel7.setText("car name");
         jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jTextField7.setBackground(new java.awt.Color(238, 238, 238));
-        jTextField7.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
-        jTextField7.setForeground(new java.awt.Color(50, 110, 211));
-        jTextField7.setBorder(null);
-        jTextField7.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
-        jTextField7.addActionListener(new java.awt.event.ActionListener() {
+        carNameTextField.setBackground(new java.awt.Color(238, 238, 238));
+        carNameTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        carNameTextField.setForeground(new java.awt.Color(50, 110, 211));
+        carNameTextField.setBorder(null);
+        carNameTextField.setCursor(new java.awt.Cursor(java.awt.Cursor.TEXT_CURSOR));
+        carNameTextField.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jTextField7ActionPerformed(evt);
+                carNameTextFieldActionPerformed(evt);
             }
         });
 
@@ -79,63 +100,136 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
         doneLabel.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         doneLabel.setForeground(new java.awt.Color(33, 209, 38));
 
+        sendButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
+        sendButton.setForeground(new java.awt.Color(50, 110, 211));
+        sendButton.setText("Send");
+        sendButton.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        sendButton.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                sendButtonActionPerformed(evt);
+            }
+        });
+
+        jScrollPane1.setBackground(new java.awt.Color(238, 238, 238));
+        jScrollPane1.setBorder(null);
+        jScrollPane1.setForeground(new java.awt.Color(50, 110, 211));
+
+        resultTextPanel.setBackground(new java.awt.Color(238, 238, 238));
+        resultTextPanel.setColumns(20);
+        resultTextPanel.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
+        resultTextPanel.setForeground(new java.awt.Color(50, 110, 211));
+        resultTextPanel.setRows(5);
+        resultTextPanel.setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        resultTextPanel.setFocusable(false);
+        jScrollPane1.setViewportView(resultTextPanel);
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(this);
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(36, 36, 36)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addComponent(jSeparator8)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jTextField7)
-                        .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(532, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(19, 19, 19)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jScrollPane1)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                        .addComponent(jSeparator8)
+                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(carNameTextField)
+                                        .addComponent(coolTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 378, Short.MAX_VALUE)
+                                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jLabel7)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField7, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jLabel7)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(carNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jLabel8)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTextField8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(coolTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator8, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 426, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 403, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 11, Short.MAX_VALUE)
                 .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 32, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTextField8ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField8ActionPerformed
+    private void coolTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_coolTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField8ActionPerformed
+    }//GEN-LAST:event_coolTextFieldActionPerformed
 
-    private void jTextField7ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jTextField7ActionPerformed
+    private void carNameTextFieldActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_carNameTextFieldActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_jTextField7ActionPerformed
+    }//GEN-LAST:event_carNameTextFieldActionPerformed
+
+    private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+
+        Car car = null;
+
+        String carName = carNameTextField.getText();
+
+        if (carName != null && !carName.isEmpty()) {
+            car = new Car();
+            car.setName(carName);
+        }
+
+        if (coolTextField.getText() != null && !coolTextField.getText().isEmpty()) {
+            boolean cool = Boolean.parseBoolean(coolTextField.getText());
+            if (car == null) {
+                car = new Car();
+            }
+            car.setCool(cool);
+        }
+
+        command.setValue(car);
+
+        commandSender.sendCommand(command);
+
+        try {
+            String response = commandResponseReceiver.receiveCommandResponse();
+            resultTextPanel.setText(response);
+
+            doneLabel.setVisible(true);
+            doneLabel.setText("Done!");
+        } catch (ServerIsDownException e) {
+            JOptionPane.showMessageDialog(null, e.getMessage());
+        }
+
+
+    }//GEN-LAST:event_sendButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JTextField carNameTextField;
+    private javax.swing.JTextField coolTextField;
     private javax.swing.JLabel doneLabel;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
+    private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
-    private javax.swing.JTextField jTextField7;
-    private javax.swing.JTextField jTextField8;
+    private javax.swing.JTextArea resultTextPanel;
+    private javax.swing.JButton sendButton;
     // End of variables declaration//GEN-END:variables
 }
