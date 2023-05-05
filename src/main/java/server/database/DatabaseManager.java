@@ -134,11 +134,6 @@ public class DatabaseManager extends CollectionManager {
 
     public boolean insertHumanBeing(HumanBeing humanBeing, String owner, Long key) throws SQLException {
 
-        if (humanBeing.getCar() != null) {
-            insertCar(humanBeing.getCar());
-            int carId = getCarId(humanBeing.getCar());
-        }
-
         int humanBeingPK = generateHumanBeingPK();
         humanBeing.setId((long) humanBeingPK);
 

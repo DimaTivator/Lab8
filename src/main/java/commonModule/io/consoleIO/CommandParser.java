@@ -5,6 +5,8 @@ import commonModule.commands.Command;
 import commonModule.commands.commandObjects.*;
 import commonModule.dataStructures.Pair;
 import commonModule.dataStructures.Triplet;
+import commonModule.dataStructures.network.CommandRequest;
+import commonModule.dataStructures.network.Request;
 import commonModule.exceptions.InvalidCoordinatesException;
 import commonModule.exceptions.commandExceptions.InvalidArgumentsException;
 import commonModule.io.humanBeingInput.CarObjectConsoleReader;

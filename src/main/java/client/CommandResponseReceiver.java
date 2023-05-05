@@ -15,7 +15,7 @@ public class CommandResponseReceiver {
         this.networkProvider = networkProvider;
     }
 
-    public String receiveCommandResponse() throws Exception {
+    public String receiveCommandResponse() throws ServerIsDownException {
 
         Response response = networkProvider.receive();
 

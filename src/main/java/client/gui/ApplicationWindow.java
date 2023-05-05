@@ -8,9 +8,7 @@ import client.Authenticator;
 import client.CommandResponseReceiver;
 import client.CommandSender;
 import commonModule.commands.Command;
-import commonModule.commands.commandObjects.HelpCommand;
-import commonModule.commands.commandObjects.InfoCommand;
-import commonModule.commands.commandObjects.PrintUniqueMoodCommand;
+import commonModule.commands.commandObjects.*;
 
 import javax.swing.*;
 import java.awt.*;
@@ -76,6 +74,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBounds(new java.awt.Rectangle(222, 100, 0, 0));
         setCursor(new java.awt.Cursor(java.awt.Cursor.DEFAULT_CURSOR));
+        setResizable(false);
 
         usernameLabel.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
         usernameLabel.setForeground(new java.awt.Color(71, 199, 231));
@@ -500,7 +499,10 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(insertButton);
 
-        showCommandInterface(new CommandWithObjectPanel());
+        CommandWithObjectPanel commandWithObjectPanel = new CommandWithObjectPanel(commandSender, commandResponseReceiver);
+        commandWithObjectPanel.setCommand(new InsertCommand());
+
+        showCommandInterface(commandWithObjectPanel);
     }//GEN-LAST:event_insertButtonActionPerformed
 
 
@@ -508,7 +510,10 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(updateButton);
 
-        showCommandInterface(new CommandWithObjectPanel());
+        CommandWithObjectPanel commandWithObjectPanel = new CommandWithObjectPanel(commandSender, commandResponseReceiver);
+        commandWithObjectPanel.setCommand(new UpdateCommand());
+
+        showCommandInterface(commandWithObjectPanel);
     }//GEN-LAST:event_updateButtonActionPerformed
 
 
@@ -516,8 +521,9 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(removeButton);
 
-        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel();
+        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel(commandSender, commandResponseReceiver);
         oneArgCommandPanel.getArgNameLabel().setText("key");
+        oneArgCommandPanel.setCommand(new RemoveKeyCommand());
 
         showCommandInterface(oneArgCommandPanel);
     }//GEN-LAST:event_removeButtonActionPerformed
@@ -534,10 +540,9 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(executeScriptButton);
 
-        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel();
-        oneArgCommandPanel.getArgNameLabel().setText("script path");
+        ExecuteScriptPanel executeScriptPanel = new ExecuteScriptPanel();
 
-        showCommandInterface(oneArgCommandPanel);
+        showCommandInterface(executeScriptPanel);
     }//GEN-LAST:event_executeScriptButtonActionPerformed
 
 
@@ -545,7 +550,10 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(removeLowerButton);
 
-        showCommandInterface(new CommandWithObjectPanel());
+        CommandWithObjectPanel commandWithObjectPanel = new CommandWithObjectPanel(commandSender, commandResponseReceiver);
+        commandWithObjectPanel.setCommand(new RemoveLowerCommand());
+
+        showCommandInterface(commandWithObjectPanel);
     }//GEN-LAST:event_removeLowerButtonActionPerformed
 
 
@@ -553,7 +561,10 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(replaceIfGreaterButton);
 
-        showCommandInterface(new CommandWithObjectPanel());
+        CommandWithObjectPanel commandWithObjectPanel = new CommandWithObjectPanel(commandSender, commandResponseReceiver);
+        commandWithObjectPanel.setCommand(new ReplaceIfGreaterCommand());
+
+        showCommandInterface(commandWithObjectPanel);
     }//GEN-LAST:event_replaceIfGreaterButtonActionPerformed
 
 
@@ -561,7 +572,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(removeGreaterButton);
 
-        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel();
+        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel(commandSender, commandResponseReceiver);
         oneArgCommandPanel.getArgNameLabel().setText("key");
 
         showCommandInterface(oneArgCommandPanel);
@@ -572,10 +583,12 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(countImpactSpeedButton);
 
-        OneArgCommandPanel oneArgCommandPanel = new OneArgCommandPanel();
-        oneArgCommandPanel.getArgNameLabel().setText("impact speed");
+        CommandWithResultPanel commandWithResultPanel = new CommandWithResultPanel(commandSender, commandResponseReceiver);
+        commandWithResultPanel.getArgNameLabel().setText("impact speed");
+        commandWithResultPanel.setCommand(new CountLessThanImpactSpeedCommand());
+        commandWithResultPanel.getResultLabel().setVisible(false);
 
-        showCommandInterface(oneArgCommandPanel);
+        showCommandInterface(commandWithResultPanel);
     }//GEN-LAST:event_countImpactSpeedButtonActionPerformed
 
 
@@ -583,11 +596,12 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(filterCarButton);
 
-        showCommandInterface(new FilterCarCommandPanel());
+        showCommandInterface(new FilterCarCommandPanel(commandSender, commandResponseReceiver));
     }//GEN-LAST:event_filterCarButtonActionPerformed
 
 
     private void uniqueMoodButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_uniqueMoodButtonActionPerformed
+
         processTextCommand(new PrintUniqueMoodCommand());
 
         resetButtonColors(uniqueMoodButton);
