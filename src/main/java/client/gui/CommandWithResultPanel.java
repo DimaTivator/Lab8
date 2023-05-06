@@ -177,6 +177,8 @@ public class CommandWithResultPanel extends javax.swing.JPanel {
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
 
+        doneLabel.setVisible(false);
+
         try {
             command.setArgs(new String[]{textField.getText()});
         } catch (InvalidArgumentsException e) {

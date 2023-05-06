@@ -185,6 +185,8 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
 
+        doneLabel.setVisible(false);
+
         Car car = null;
 
         String carName = carNameTextField.getText();
