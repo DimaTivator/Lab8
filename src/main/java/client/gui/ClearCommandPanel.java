@@ -12,10 +12,7 @@ import commonModule.exceptions.serverExceptions.ServerIsDownException;
 
 import javax.swing.*;
 
-/**
- *
- * @author dmitrii_andriianov
- */
+
 public class ClearCommandPanel extends javax.swing.JPanel {
 
     private CommandSender commandSender;
@@ -141,6 +138,8 @@ public class ClearCommandPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_passwordFieldActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
+
+        doneLabel.setVisible(false);
 
         String password = passwordField.getText();
         System.out.println(password);
