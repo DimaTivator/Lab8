@@ -21,7 +21,7 @@ import java.io.FileNotFoundException;
  */
 public class ExecuteScriptPanel extends javax.swing.JPanel {
 
-    private ScriptExecutor scriptExecutor = new ScriptExecutor();
+    // private ScriptExecutor scriptExecutor = new ScriptExecutor();
 
     private CommandSender commandSender;
     private CommandResponseReceiver commandResponseReceiver;
@@ -166,13 +166,20 @@ public class ExecuteScriptPanel extends javax.swing.JPanel {
     }//GEN-LAST:event_textFieldActionPerformed
 
     private void sendButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_sendButtonActionPerformed
-        try {
-            scriptExecutor.executeScript(textField.getText(), commandSender, commandResponseReceiver, resultTextPanel);
-            doneLabel.setText("Done!");
-            doneLabel.setVisible(true);
-        } catch (ServerIsDownException | ScriptsRecursionException | FileNotFoundException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
-        }
+
+        doneLabel.setVisible(false);
+
+        SwingWorker<Void, String> executeScriptWorker = new ScriptExecutor(
+                textField.getText(),
+                commandSender,
+                commandResponseReceiver,
+                resultTextPanel
+                );
+
+        executeScriptWorker.execute();
+
+        doneLabel.setText("Done!");
+        doneLabel.setVisible(true);
 
     }//GEN-LAST:event_sendButtonActionPerformed
 
