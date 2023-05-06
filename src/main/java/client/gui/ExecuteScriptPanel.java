@@ -173,13 +173,11 @@ public class ExecuteScriptPanel extends javax.swing.JPanel {
                 textField.getText(),
                 commandSender,
                 commandResponseReceiver,
-                resultTextPanel
+                resultTextPanel,
+                doneLabel
                 );
 
         executeScriptWorker.execute();
-
-        doneLabel.setText("Done!");
-        doneLabel.setVisible(true);
 
     }//GEN-LAST:event_sendButtonActionPerformed
 

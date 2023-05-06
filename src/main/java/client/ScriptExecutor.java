@@ -40,14 +40,17 @@ public class ScriptExecutor extends SwingWorker<Void, String> {
     private final CommandSender commandSender;
     private final CommandResponseReceiver commandResponseReceiver;
     private final JTextArea resultTextField;
+    private final JLabel doneLabel;
 
     public ScriptExecutor(String filePath, CommandSender commandSender,
                           CommandResponseReceiver commandResponseReceiver,
-                          JTextArea resultTextField) {
+                          JTextArea resultTextField, JLabel doneLabel) {
+
         this.filePath = filePath;
         this.commandSender = commandSender;
         this.commandResponseReceiver = commandResponseReceiver;
         this.resultTextField = resultTextField;
+        this.doneLabel = doneLabel;
     }
 
     @Override
@@ -68,7 +71,7 @@ public class ScriptExecutor extends SwingWorker<Void, String> {
                     throw new ScriptsRecursionException("You should not call execute_script recursively!");
                 }
                 usedScripts.add(args[0]);
-                ScriptExecutor scriptExecutor = new ScriptExecutor(args[0], commandSender, commandResponseReceiver, resultTextField);
+                ScriptExecutor scriptExecutor = new ScriptExecutor(args[0], commandSender, commandResponseReceiver, resultTextField, doneLabel);
                 scriptExecutor.execute();
             } else {
                 Command command = commandParser.pack(parsedCommand);
@@ -97,6 +100,8 @@ public class ScriptExecutor extends SwingWorker<Void, String> {
     protected void done() {
         try {
             get();
+            doneLabel.setVisible(true);
+            doneLabel.setText("Done!");
         } catch (Exception e) {
             if (e.getMessage().contains("java.io.FileNotFoundException")) {
                 JOptionPane.showMessageDialog(null, "No such file or directory: " + filePath);
