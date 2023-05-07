@@ -255,6 +255,8 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
 
 
 
+
+
     /**
      * Compares the current {@link HumanBeing} instance to another {@link HumanBeing} object based on their IDs.
      * @param obj The {@link HumanBeing} object to be compared to the current {@link HumanBeing} instance.

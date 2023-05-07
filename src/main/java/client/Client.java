@@ -38,19 +38,9 @@ public class Client {
             System.exit(0);
         }
 
-
-        String commandName;
-        String[] commandArgs;
-        CommandRequest request;
-        Response response;
-        SizeResponse sizeResponse = null;
-        int numberOfPackages = 1;
-
         try {
 
             NetworkProvider networkProvider = new NetworkProvider(address.getHostAddress(), port);
-            CommandParser commandParser = new CommandParser();
-            ScriptExecutor scriptExecutor = new ScriptExecutor();
             Authenticator authenticator = new Authenticator(networkProvider);
             CommandSender commandSender = new CommandSender(networkProvider, authenticator);
             CommandResponseReceiver commandResponseReceiver = new CommandResponseReceiver(networkProvider);
@@ -60,78 +50,79 @@ public class Client {
             SwingUtilities.invokeLater(() -> {
                 java.awt.EventQueue.invokeLater(() -> {
                     new AuthenticationWindow(authenticator, commandSender, commandResponseReceiver).setVisible(true);
+                    // new ApplicationWindow(authenticator, commandSender, commandResponseReceiver).setVisible(true);
                 });
             });
 
 
-            while (true) {
-
-                try {
-
-                    Triplet<String, String[], Object> parsedInput = commandParser.readObjectFromConsole();
-                    commandName = parsedInput.getFirst();
-                    commandArgs = parsedInput.getSecond();
-                    Object object = parsedInput.getThird();
-
-                    if (commandName.equals("exit")) {
-                        if (commandArgs.length == 0) {
-                            System.out.println(ConsoleColors.PURPLE + "Bye!" + ConsoleColors.RESET);
-                            System.exit(0);
-                        } else {
-                            throw new InvalidArgumentsException("Command exit doesn't take any arguments!");
-                        }
-                    }
-
-                    else if (commandName.equals("execute_script")) {
-                        if (commandArgs.length == 1) {
-                            scriptExecutor.executeScript(commandArgs[0], networkProvider, authenticator);
-                        } else {
-                            throw new InvalidArgumentsException("Command execute_script take only one argument - path to the script");
-                        }
-
-                    } else {
-
-                        Command command = commandParser.pack(parsedInput);
-
-                        request = new CommandRequest(command);
-                        request.setLogin(authenticator.getLogin());
-                        request.setPassword(authenticator.getPassword());
-
-                        networkProvider.send(request);
-                        response = networkProvider.receive();
-
-                        if (response == null) {
-                            System.out.println(ConsoleColors.RED + "Server is down :(\nPlease try again later" + ConsoleColors.RESET);
-                        }
-
-                        if (response.getClass() == SizeResponse.class) {
-
-                            sizeResponse = (SizeResponse) response;
-                            numberOfPackages = Integer.parseInt(sizeResponse.getSize());
-
-                            for (int i = 0; i < numberOfPackages; i++) {
-                                response = networkProvider.receive();
-                                if (response == null) {
-                                    System.out.println(ConsoleColors.RED + "Server is down :(\nPlease try again later" + ConsoleColors.RESET);
-                                } else {
-                                    System.out.println(((CommandResponse)response).getOutput());
-                                }
-                            }
-
-                        } else {
-                            System.out.println(((CommandResponse)response).getOutput());
-                        }
-                    }
-
-                } catch (NoSuchElementException e) {
-                    break;
-                } catch (Exception e) {
-                    System.out.println(e.getMessage());
-                }
-            }
+//            while (true) {
+//
+//                try {
+//
+//                    Triplet<String, String[], Object> parsedInput = commandParser.readObjectFromConsole();
+//                    commandName = parsedInput.getFirst();
+//                    commandArgs = parsedInput.getSecond();
+//                    Object object = parsedInput.getThird();
+//
+//                    if (commandName.equals("exit")) {
+//                        if (commandArgs.length == 0) {
+//                            System.out.println(ConsoleColors.PURPLE + "Bye!" + ConsoleColors.RESET);
+//                            System.exit(0);
+//                        } else {
+//                            throw new InvalidArgumentsException("Command exit doesn't take any arguments!");
+//                        }
+//                    }
+//
+//                    else if (commandName.equals("execute_script")) {
+//                        if (commandArgs.length == 1) {
+//                            scriptExecutor.executeScript(commandArgs[0], networkProvider, authenticator);
+//                        } else {
+//                            throw new InvalidArgumentsException("Command execute_script take only one argument - path to the script");
+//                        }
+//
+//                    } else {
+//
+//                        Command command = commandParser.pack(parsedInput);
+//
+//                        request = new CommandRequest(command);
+//                        request.setLogin(authenticator.getLogin());
+//                        request.setPassword(authenticator.getPassword());
+//
+//                        networkProvider.send(request);
+//                        response = networkProvider.receive();
+//
+//                        if (response == null) {
+//                            System.out.println(ConsoleColors.RED + "Server is down :(\nPlease try again later" + ConsoleColors.RESET);
+//                        }
+//
+//                        if (response.getClass() == SizeResponse.class) {
+//
+//                            sizeResponse = (SizeResponse) response;
+//                            numberOfPackages = Integer.parseInt(sizeResponse.getSize());
+//
+//                            for (int i = 0; i < numberOfPackages; i++) {
+//                                response = networkProvider.receive();
+//                                if (response == null) {
+//                                    System.out.println(ConsoleColors.RED + "Server is down :(\nPlease try again later" + ConsoleColors.RESET);
+//                                } else {
+//                                    System.out.println(((CommandResponse)response).getOutput());
+//                                }
+//                            }
+//
+//                        } else {
+//                            System.out.println(((CommandResponse)response).getOutput());
+//                        }
+//                    }
+//
+//                } catch (NoSuchElementException e) {
+//                    break;
+//                } catch (Exception e) {
+//                    System.out.println(e.getMessage());
+//                }
+//            }
         }
         catch (Exception e) {
-            System.out.println(e.getMessage());
+            JOptionPane.showMessageDialog(null, e.getMessage());
         }
     }
 }

@@ -1,34 +1,20 @@
-package client;
+package client.gui.workers;
 
-import client.gui.ExecuteScriptPanel;
-import commonModule.auxiliaryClasses.ConsoleColors;
+import client.CommandResponseReceiver;
+import client.CommandSender;
 import commonModule.commands.Command;
-import commonModule.dataStructures.network.CommandResponse;
-import commonModule.dataStructures.network.Request;
 import commonModule.dataStructures.Triplet;
-import commonModule.exceptions.InvalidCoordinatesException;
-import commonModule.exceptions.InvalidInputException;
 import commonModule.exceptions.ScriptsRecursionException;
-import commonModule.exceptions.commandExceptions.InvalidArgumentsException;
-import commonModule.exceptions.commandExceptions.NoSuchCommandException;
 import commonModule.exceptions.serverExceptions.ServerIsDownException;
 import commonModule.io.consoleIO.CommandParser;
 
 import javax.swing.*;
-import javax.swing.text.BadLocationException;
-import java.io.EOFException;
 import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.util.HashSet;
 import java.util.Scanner;
 import java.util.Set;
-import java.util.concurrent.ExecutionException;
 
 import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 
 /**
  * The {@code ScriptExecutor} class provides the functionality to execute commands from a script file.

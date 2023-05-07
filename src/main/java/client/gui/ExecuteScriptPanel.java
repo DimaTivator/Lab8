@@ -6,19 +6,11 @@ package client.gui;
 
 import client.CommandResponseReceiver;
 import client.CommandSender;
-import client.ScriptExecutor;
-import commonModule.commands.Command;
-import commonModule.exceptions.ScriptsRecursionException;
-import commonModule.exceptions.commandExceptions.InvalidArgumentsException;
-import commonModule.exceptions.serverExceptions.ServerIsDownException;
+import client.gui.workers.ScriptExecutor;
 
 import javax.swing.*;
-import java.io.FileNotFoundException;
 
-/**
- *
- * @author dmitrii_andriianov
- */
+
 public class ExecuteScriptPanel extends javax.swing.JPanel {
 
     // private ScriptExecutor scriptExecutor = new ScriptExecutor();

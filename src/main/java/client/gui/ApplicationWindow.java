@@ -89,14 +89,13 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.setLayout(interactionPanelLayout);
         interactionPanelLayout.setHorizontalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interactionPanelLayout.createSequentialGroup()
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+            .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         interactionPanelLayout.setVerticalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pigImagePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(interactionPanelLayout.createSequentialGroup()
+                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         commandsButtonsPanel.setBackground(new java.awt.Color(50, 110, 211));
@@ -368,7 +367,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateButton, javax.swing.GroupLayout.DEFAULT_SIZE, 30, Short.MAX_VALUE)
+                .addComponent(updateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -457,6 +456,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.add(panel);
 
         revalidate();
+
         repaint();
     }
 
@@ -482,9 +482,12 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
 
     private void showButtonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_showButtonActionPerformed
-        // TODO add your handling code here:
 
         resetButtonColors(showButton);
+
+        TableFrame tableFrame = new TableFrame(commandSender, commandResponseReceiver);
+        tableFrame.setVisible(true);
+
     }//GEN-LAST:event_showButtonActionPerformed
 
 
@@ -625,16 +628,13 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.setLayout(interactionPanelLayout);
         interactionPanelLayout.setHorizontalGroup(
                 interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(interactionPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE))
+                        .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
         );
         interactionPanelLayout.setVerticalGroup(
                 interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                         .addGroup(interactionPanelLayout.createSequentialGroup()
-                                .addContainerGap()
-                                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addContainerGap())
+                                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(0, 0, Short.MAX_VALUE))
         );
 
         resetButtonColors(null);

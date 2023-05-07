@@ -10,6 +10,7 @@ import java.io.Serializable;
  * The y value cannot be null.
  */
 public class Coordinates implements Comparable<Coordinates>, Serializable {
+
     private double x;
     private Float y;
 
