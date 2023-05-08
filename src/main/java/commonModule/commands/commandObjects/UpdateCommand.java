@@ -67,7 +67,7 @@ public class UpdateCommand extends CommandTemplate implements CommandWithRespons
 
             if (id.equals(value.getId())) {
                 databaseManager.removeHumanBeing(value.getId());
-                databaseManager.insertHumanBeing(newValue, getUserLogin(), key);
+                databaseManager.insertHumanBeing(newValue, getUserLogin(), key, value.getId());
             }
         }
 

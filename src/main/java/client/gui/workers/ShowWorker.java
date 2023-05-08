@@ -94,7 +94,7 @@ public class ShowWorker extends SwingWorker<Void, Object[]> {
     protected void done() {
         try {
             get();
-            tableFrame.paintHumans();
+            tableFrame.paintHumans(false, -1L);
 
         } catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

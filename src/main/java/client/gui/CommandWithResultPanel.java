@@ -194,6 +194,8 @@ public class CommandWithResultPanel extends javax.swing.JPanel {
             resultValueLabel.setVisible(true);
             resultValueLabel.setText(response);
 
+            doneLabel.setVisible(true);
+
         } catch (ServerIsDownException e) {
             JOptionPane.showMessageDialog(null, "Server is down.\n Please try again later");
         }

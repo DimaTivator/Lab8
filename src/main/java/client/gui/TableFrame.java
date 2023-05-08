@@ -161,22 +161,38 @@ public class TableFrame extends javax.swing.JFrame {
     }
 
 
-    public void paintHumans() {
+    public void paintHumans(boolean repaint, Long id) {
 
-        visualizationPanel.removeAll();
+        if (repaint) {
+            for (Component component : visualizationPanel.getComponents()) {
+                if (component instanceof HumanPanel) {
+                    HumanBeing humanBeing = ((HumanPanel) component).getHumanBeing();
+                    if (humanBeing.getId().equals(id)) {
+                        visualizationPanel.remove(component);
+                        repaint();
+                        break;
+                    }
+                }
+            }
+        } else {
+            visualizationPanel.removeAll();
+        }
+
+
 
         Command command = new GetOwnerCommand();
-        int i = 50;
 
         for (Long key : humanBeings.keySet()) {
 
             HumanBeing humanBeing = humanBeings.get(key);
 
+            if (repaint && !humanBeing.getId().equals(id)) {
+                continue;
+            }
+
             try {
                 command.setArgs(new String[]{ humanBeing.getId().toString() });
             } catch (Exception ignored) {}
-
-            // System.out.println(humanBeing.getId().toString());
 
             commandSender.sendCommand(command);
 
@@ -187,8 +203,7 @@ public class TableFrame extends javax.swing.JFrame {
                 if (humanPanels.containsKey(key)) {
                     humanPanel = humanPanels.get(key);
                 } else {
-                    humanPanel = new HumanPanel(35);
-                    humanPanel.setHumanBeing(humanBeing);
+                    humanPanel = new HumanPanel(35, humanBeing);
                 }
 
 
@@ -223,12 +238,22 @@ public class TableFrame extends javax.swing.JFrame {
                 });
 
                 humanPanel.setColor(ColorGenerator.getColor(Integer.parseInt(response)));
-                humanPanel.setBounds((int) humanBeing.getCoordinates().getX(), (int) Math.ceil(humanBeing.getCoordinates().getY()), 50, 50);
+                //humanPanel.setBounds((int) humanBeing.getCoordinates().getX() + 500, (int) Math.ceil(humanBeing.getCoordinates().getY()) + 100, 60, 65);
+                //humanPanel.setBounds((int) humanBeing.getCoordinates().getX() + 500, 0, 60, 300);
+                humanPanel.setBounds((int) humanBeing.getCoordinates().getX() + 500, 0, 60, 65);
 
-                visualizationPanel.add(humanPanel);
+                if (id == -1L) {
+                    humanPanel.startAnimation();
+                    visualizationPanel.add(humanPanel);
+                }
+
+                if (repaint && humanBeings.get(key).getId().equals(id) && id != -1) {
+                    humanPanel.startAnimation();
+                    visualizationPanel.add(humanPanel);
+                    break;
+                }
+
                 visualizationPanel.repaint();
-
-                //i += 50;
 
             } catch (ServerIsDownException e) {
                 JOptionPane.showMessageDialog(null, e.getMessage());
@@ -278,7 +303,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                         if (success) {
                             model.setValueAt(input, table.getSelectedRow(), table.getSelectedColumn());
-                            paintHumans();
+                            paintHumans(true, rowObject.getId());
                             table.repaint();
                         } else {
                             rowObject.setName(previousName);
@@ -353,7 +378,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                     if (success) {
                         model.setValueAt(input, table.getSelectedRow(), table.getSelectedColumn());
-                        paintHumans();
+                        paintHumans(true, rowObject.getId());
                         table.repaint();
                     } else {
                         rowObject.setCoordinates(previousCoordinates);
@@ -423,7 +448,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                     if (success) {
                         model.setValueAt(input, table.getSelectedRow(), table.getSelectedColumn());
-                        paintHumans();
+                        paintHumans(true, rowObject.getId());
                         table.repaint();
                     } else {
                         rowObject.setCoordinates(previousCoordinates);
@@ -487,7 +512,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                     if (success) {
                         model.setValueAt(input, table.getSelectedRow(), table.getSelectedColumn());
-                        paintHumans();
+                        paintHumans(true, rowObject.getId());
                         table.repaint();
                     } else {
                         rowObject.setMood(previousMood);
@@ -551,7 +576,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                     if (success) {
                         model.setValueAt(input, table.getSelectedRow(), table.getSelectedColumn());
-                        paintHumans();
+                        paintHumans(true, rowObject.getId());
                         table.repaint();
                     } else {
                         rowObject.setWeaponType(previousWeapon);
@@ -616,7 +641,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                     if (success) {
                         model.setValueAt(input, table.getSelectedRow(), table.getSelectedColumn());
-                        paintHumans();
+                        paintHumans(true, rowObject.getId());
                         table.repaint();
                     } else {
                         rowObject.setRealHero(previousRealHero);
@@ -681,7 +706,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                     if (success) {
                         model.setValueAt(input, table.getSelectedRow(), table.getSelectedColumn());
-                        paintHumans();
+                        paintHumans(true, rowObject.getId());
                         table.repaint();
                     } else {
                         rowObject.setRealHero(previousHasToothpick);
@@ -746,7 +771,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                     if (success) {
                         model.setValueAt(input, table.getSelectedRow(), table.getSelectedColumn());
-                        paintHumans();
+                        paintHumans(true, rowObject.getId());
                         table.repaint();
                     } else {
                         rowObject.setImpactSpeed(previousImpactSpeed);
@@ -801,7 +826,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                     if (success) {
                         model.setValueAt(newCarName, table.getSelectedRow(), table.getSelectedColumn());
-                        paintHumans();
+                        paintHumans(true, rowObject.getId());
                         table.repaint();
                     } else {
                         rowObject.setCar(new Car(previousCarName, rowObject.getCar().getCool()));
@@ -866,7 +891,7 @@ public class TableFrame extends javax.swing.JFrame {
 
                     if (success) {
                         model.setValueAt(newCarCool, table.getSelectedRow(), table.getSelectedColumn());
-                        paintHumans();
+                        paintHumans(true, rowObject.getId());
                         table.repaint();
                     } else {
                         rowObject.setCar(new Car(rowObject.getCar().getName(), previousCarCool));
