@@ -132,10 +132,14 @@ public class DatabaseManager extends CollectionManager {
     }
 
 
-    public boolean insertHumanBeing(HumanBeing humanBeing, String owner, Long key) throws SQLException {
+    public boolean insertHumanBeing(HumanBeing humanBeing, String owner, Long key, Long id) throws SQLException {
 
-        int humanBeingPK = generateHumanBeingPK();
-        humanBeing.setId((long) humanBeingPK);
+        if (id == -1) {
+            int humanBeingPK = generateHumanBeingPK();
+            humanBeing.setId((long) humanBeingPK);
+        } else {
+            humanBeing.setId(id);
+        }
 
         int moodId = getMoodId(humanBeing.getMood());
         int weaponTypeId = getWeaponTypeId(humanBeing.getWeaponType());
@@ -167,7 +171,7 @@ public class DatabaseManager extends CollectionManager {
             insertHumanBeingStatement.setDate(10, Date.valueOf(humanBeing.getCreationDate()));
             insertHumanBeingStatement.setInt(11, ownerId);
             insertHumanBeingStatement.setObject(12, key);
-            insertHumanBeingStatement.setInt(13, humanBeingPK);
+            insertHumanBeingStatement.setInt(13, Math.toIntExact(humanBeing.getId()));
 
             insertHumanBeingStatement.executeUpdate();
 
@@ -202,5 +206,22 @@ public class DatabaseManager extends CollectionManager {
             removeStatement.executeUpdate();
             return true;
         }
+    }
+
+    public String getOwner(Long id) throws SQLException {
+        String getOwnerQuery = "select \"owner_id\" from \"HumanBeing\" where \"humanBeing_pk\" =?";
+
+        try (PreparedStatement getOwnerStatement = databaseHandler.getConnection().prepareStatement(getOwnerQuery)) {
+
+            getOwnerStatement.setObject(1, id, Types.BIGINT);
+
+            ResultSet resultSet = getOwnerStatement.executeQuery();
+
+            if (resultSet.next()) {
+                return resultSet.getString(1);
+            }
+        }
+
+        return null;
     }
 }

@@ -59,7 +59,7 @@ public class ReplaceIfGreaterCommand extends CommandTemplate implements CommandW
 
         if (value.compareTo(data.get(key)) > 0) {
             databaseManager.removeHumanBeing(value.getId());
-            databaseManager.insertHumanBeing(value, getUserLogin(), key);
+            databaseManager.insertHumanBeing(value, getUserLogin(), key, value.getId());
             data.put(key, value);
         }
 

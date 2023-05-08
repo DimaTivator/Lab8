@@ -3,6 +3,8 @@ package commonModule.collectionClasses;
 import commonModule.auxiliaryClasses.ConsoleColors;
 
 import java.io.Serializable;
+import java.sql.Date;
+import java.time.LocalDate;
 
 /**
  * Class representing a human being.

@@ -55,7 +55,7 @@ public class InsertCommand extends CommandTemplate implements CommandWithRespons
         }
 
         DatabaseManager databaseManager = getDatabaseManager();
-        databaseManager.insertHumanBeing(value, getUserLogin(), key);
+        databaseManager.insertHumanBeing(value, getUserLogin(), key, -1L);
 
         data.put(key, value);
 

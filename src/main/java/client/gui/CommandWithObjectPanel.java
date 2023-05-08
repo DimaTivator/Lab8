@@ -583,6 +583,7 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
             String response = commandResponseReceiver.receiveCommandResponse();
             if (response.equals("Done!")) {
                 doneLabel.setText("Done!");
+                doneLabel.setVisible(true);
             } else {
                 JOptionPane.showMessageDialog(null, response);
             }

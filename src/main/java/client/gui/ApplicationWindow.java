@@ -21,6 +21,16 @@ public class ApplicationWindow extends javax.swing.JFrame {
     private final CommandResponseReceiver commandResponseReceiver;
     private final Authenticator authenticator;
 
+    private boolean tableIsOpened = false;
+
+    public boolean checkTableIsOpened() {
+        return tableIsOpened;
+    }
+
+    public void setTableIsOpened(boolean tableIsOpened) {
+        this.tableIsOpened = tableIsOpened;
+    }
+
     /**
      * Creates new form ApplicationWindow
      */
@@ -89,13 +99,13 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.setLayout(interactionPanelLayout);
         interactionPanelLayout.setHorizontalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addComponent(pigImagePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
         );
         interactionPanelLayout.setVerticalGroup(
             interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(interactionPanelLayout.createSequentialGroup()
-                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(0, 0, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interactionPanelLayout.createSequentialGroup()
+                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         commandsButtonsPanel.setBackground(new java.awt.Color(50, 110, 211));
@@ -367,7 +377,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(insertButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(updateButton, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(updateButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(removeButton, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -414,8 +424,10 @@ public class ApplicationWindow extends javax.swing.JFrame {
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(usernameLabel, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(usernameIconLabel, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap())
-            .addComponent(interactionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(interactionPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         pack();
@@ -461,7 +473,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
     }
 
 
-    private void resetButtonColors(JButton button) {
+    public void resetButtonColors(JButton button) {
 
         for (Component component : commandsButtonsPanel.getComponents()) {
             component.setForeground(new Color(246, 246, 246));
@@ -485,8 +497,11 @@ public class ApplicationWindow extends javax.swing.JFrame {
 
         resetButtonColors(showButton);
 
-        TableFrame tableFrame = new TableFrame(commandSender, commandResponseReceiver);
-        tableFrame.setVisible(true);
+        if (!tableIsOpened) {
+            tableIsOpened = true;
+            TableFrame tableFrame = new TableFrame(this, commandSender, commandResponseReceiver);
+            tableFrame.setVisible(true);
+        }
 
     }//GEN-LAST:event_showButtonActionPerformed
 
@@ -628,13 +643,13 @@ public class ApplicationWindow extends javax.swing.JFrame {
         interactionPanel.setLayout(interactionPanelLayout);
         interactionPanelLayout.setHorizontalGroup(
                 interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 678, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(pigImagePanel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 678, Short.MAX_VALUE)
         );
         interactionPanelLayout.setVerticalGroup(
                 interactionPanelLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                        .addGroup(interactionPanelLayout.createSequentialGroup()
-                                .addComponent(pigImagePanel, javax.swing.GroupLayout.PREFERRED_SIZE, 547, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                .addGap(0, 0, Short.MAX_VALUE))
+                        .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, interactionPanelLayout.createSequentialGroup()
+                                .addComponent(pigImagePanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                .addContainerGap())
         );
 
         resetButtonColors(null);

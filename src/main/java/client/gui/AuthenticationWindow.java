@@ -3,14 +3,11 @@ package client.gui;
 import client.Authenticator;
 import client.CommandResponseReceiver;
 import client.CommandSender;
-import client.gui.graphics.DotIcon;
 import commonModule.exceptions.InvalidInputException;
 import commonModule.exceptions.serverExceptions.ServerIsDownException;
 
 import javax.swing.*;
 import java.awt.*;
-import java.awt.font.TextAttribute;
-import java.util.Collections;
 import java.util.Objects;
 
 public class AuthenticationWindow extends javax.swing.JFrame {
