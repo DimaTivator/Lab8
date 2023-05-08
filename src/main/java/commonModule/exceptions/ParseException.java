@@ -12,6 +12,6 @@ public class ParseException extends Exception {
     * @param message the error message.
     */
     public ParseException(String message) {
-        super(ConsoleColors.RED + message + ConsoleColors.RESET);
+        super(message);
     }
 }

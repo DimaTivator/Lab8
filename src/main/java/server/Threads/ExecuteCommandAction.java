@@ -29,6 +29,7 @@ public class ExecuteCommandAction extends RecursiveAction {
     public ExecuteCommandAction(CommandRequest request, Logger logger, CommandsExecutor commandsExecutor,
                                 NetworkProvider networkProvider, CollectionManager collectionManager,
                                 DatabaseManager databaseManager, DatabaseHandler databaseHandler) {
+
         this.request = request;
         this.logger = logger;
         this.commandsExecutor = commandsExecutor;

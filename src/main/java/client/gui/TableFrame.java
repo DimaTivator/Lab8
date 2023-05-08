@@ -8,6 +8,7 @@ import client.CommandResponseReceiver;
 import client.CommandSender;
 import client.gui.graphics.ColorGenerator;
 import client.gui.graphics.HumanPanel;
+import client.gui.workers.Painter;
 import client.gui.workers.ShowWorker;
 import commonModule.collectionClasses.*;
 import commonModule.commands.Command;
@@ -89,11 +90,13 @@ public class TableFrame extends javax.swing.JFrame {
         setEditors();
 
         fillTable();
+
+        SwingWorker<Void, Object[]> painter = new Painter(model, commandSender, commandResponseReceiver, humanBeings, visualizationPanel, this);
+        painter.execute();
     }
 
 
-
-    private void fillTable() {
+    public void fillTable() {
 
         SwingWorker<Void, Object[]> showWorker = new ShowWorker(model, commandSender, commandResponseReceiver, humanBeings, visualizationPanel, this);
         showWorker.execute();
@@ -177,7 +180,6 @@ public class TableFrame extends javax.swing.JFrame {
         } else {
             visualizationPanel.removeAll();
         }
-
 
 
         Command command = new GetOwnerCommand();

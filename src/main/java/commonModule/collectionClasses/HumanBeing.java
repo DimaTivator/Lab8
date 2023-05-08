@@ -5,6 +5,7 @@ import commonModule.auxiliaryClasses.ConsoleColors;
 import java.io.Serializable;
 import java.sql.Date;
 import java.time.LocalDate;
+import java.util.Objects;
 
 /**
  * Class representing a human being.
@@ -259,6 +260,7 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
 
 
 
+
     /**
      * Compares the current {@link HumanBeing} instance to another {@link HumanBeing} object based on their IDs.
      * @param obj The {@link HumanBeing} object to be compared to the current {@link HumanBeing} instance.
@@ -295,9 +297,22 @@ public class HumanBeing implements Comparable<HumanBeing>, Serializable {
     }
 
     @Override
-    public boolean equals(Object obj) {
-        if (this == obj) return true;
-        if (obj.getClass() != this.getClass()) return false;
-        return id.equals(((HumanBeing) obj).getId());
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        HumanBeing obj = (HumanBeing) o;
+
+
+        return Double.compare(obj.getImpactSpeed(), impactSpeed) == 0 &&
+                realHero == obj.isRealHero() &&
+                hasToothpick == obj.isHasToothpick() &&
+                id.equals(obj.getId()) &&
+                name.equals(obj.getName()) &&
+                coordinates.equals(obj.getCoordinates()) &&
+                creationDate.equals(obj.getCreationDate()) &&
+                weaponType.equals(obj.getWeaponType()) &&
+                mood.equals(obj.getMood())
+                && car.equals(obj.getCar());
     }
+
 }

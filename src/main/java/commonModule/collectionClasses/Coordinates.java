@@ -91,4 +91,17 @@ public class Coordinates implements Comparable<Coordinates>, Serializable {
     public String toString() {
         return String.format("(%.2f, %.2f)", x, y);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Coordinates other = (Coordinates) obj;
+        return Double.compare(this.x, other.getX()) == 0 && Float.compare(this.y, other.getY()) == 0;
+    }
+
 }

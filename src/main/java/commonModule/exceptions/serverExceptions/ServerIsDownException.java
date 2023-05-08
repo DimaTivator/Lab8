@@ -5,7 +5,7 @@ import commonModule.auxiliaryClasses.ConsoleColors;
 public class ServerIsDownException extends Exception {
 
     public ServerIsDownException(String message) {
-        super(ConsoleColors.RED + message + ConsoleColors.RESET);
+        super(message);
     }
 
     public ServerIsDownException() {

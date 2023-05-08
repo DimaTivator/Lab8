@@ -12,7 +12,7 @@ public class InvalidCoordinatesException extends Exception {
      * Constructs a new exception with the default message.
      */
     public InvalidCoordinatesException() {
-        super(ConsoleColors.RED + "x coordinate must be < 487 and y coordinate must be > -704\n" + ConsoleColors.RESET);
+        super("x coordinate must be < 487 and y coordinate must be > -704\n");
     }
 
     /**
@@ -21,7 +21,7 @@ public class InvalidCoordinatesException extends Exception {
      * @param message The detail message.
      */
     public InvalidCoordinatesException(String message) {
-        super(ConsoleColors.RED + message + ConsoleColors.RESET);
+        super(message);
     }
 
 }

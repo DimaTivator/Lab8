@@ -14,13 +14,13 @@ public class EmptyCollectionException extends Exception {
      * @param message the error message
      */
     public EmptyCollectionException(String message) {
-        super(ConsoleColors.RED + message + ConsoleColors.RESET);
+        super(message);
     }
 
     /**
      * Constructs an instance of the {@code EmptyCollectionException} class with a default error message.
      */
     public EmptyCollectionException() {
-        super(ConsoleColors.RED + "Collection is empty :(" + ConsoleColors.RESET);
+        super("Collection is empty :(");
     }
 }

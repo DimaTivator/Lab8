@@ -72,4 +72,16 @@ public class Car implements Comparable<Car>, Serializable {
     public String toString() {
         return String.format("Object Car. Name: %s. Cool: %b", name, cool);
     }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null || getClass() != obj.getClass()) {
+            return false;
+        }
+        Car other = (Car) obj;
+        return this.name.equals(other.getName()) && this.cool == other.cool;
+    }
 }

@@ -11,7 +11,7 @@ public class NoSuchCommandException extends Exception {
      * Default constructor which sets a default error message.
      */
     public NoSuchCommandException() {
-        super(ConsoleColors.RED + "I don't have such command yet :(\nPlease try to enter a command again" + ConsoleColors.RESET);
+        super("I don't have such command yet :(\nPlease try to enter a command again");
     }
 
     /**

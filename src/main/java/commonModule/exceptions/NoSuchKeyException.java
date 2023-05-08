@@ -12,6 +12,6 @@ public class NoSuchKeyException extends Exception {
      @param message the message that should be displayed when the exception is thrown.
      */
     public NoSuchKeyException(String message) {
-        super(ConsoleColors.RED + message + ConsoleColors.RESET);
+        super(message);
     }
 }

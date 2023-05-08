@@ -11,7 +11,7 @@ public class InvalidArgumentsException extends Exception {
      * Default constructor which sets a default error message.
      */
     public InvalidArgumentsException() {
-        super(ConsoleColors.RED + "Something wrong with command arguments :(\nPlease try to enter a command again" + ConsoleColors.RESET);
+        super("Something wrong with command arguments :(\nPlease try to enter a command again");
     }
 
     /**
