@@ -149,7 +149,7 @@ public class AuthenticationWindow extends javax.swing.JFrame {
             russianMenuItem.setSelected(true);
         } else if (resourceBundle.getBaseBundleName().equals("client.i10n.Resources_UA")) {
             ukraineMenuItem.setSelected(true);
-        } else if (resourceBundle.getBaseBundleName().equals("client.i10n.Resource_DO")) {
+        } else if (resourceBundle.getBaseBundleName().equals("client.i10n.Resources_DO")) {
             spanishMenuItem.setSelected(true);
         } else {
             icelandMenuItem.setSelected(true);
