@@ -6,11 +6,13 @@ package client.gui;
 
 import client.CommandResponseReceiver;
 import client.CommandSender;
+import client.i10n.Resources;
 import commonModule.commands.Command;
 import commonModule.commands.commandObjects.ClearCollectionCommand;
 import commonModule.exceptions.serverExceptions.ServerIsDownException;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
 
 
 public class ClearCommandPanel extends javax.swing.JPanel {
@@ -26,6 +28,17 @@ public class ClearCommandPanel extends javax.swing.JPanel {
 
         this.commandSender = commandSender;
         this.commandResponseReceiver = commandResponseReceiver;
+
+        setLanguages();
+    }
+
+    private void setLanguages() {
+
+        ResourceBundle resourceBundle = Resources.getResourceBundle();
+
+        jLabel7.setText(resourceBundle.getString("password"));
+
+        sendButton.setText(resourceBundle.getString("send"));
     }
 
     /**
@@ -51,9 +64,9 @@ public class ClearCommandPanel extends javax.swing.JPanel {
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addContainerGap(619, Short.MAX_VALUE)
-                .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addContainerGap(574, Short.MAX_VALUE)
+                .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         jPanel1Layout.setVerticalGroup(
@@ -99,14 +112,20 @@ public class ClearCommandPanel extends javax.swing.JPanel {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addGap(19, 19, 19)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 183, Short.MAX_VALUE)
-                .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(passwordField, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 347, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 185, Short.MAX_VALUE)
+                        .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
             .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(layout.createSequentialGroup()
+                    .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGap(0, 0, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -138,10 +157,9 @@ public class ClearCommandPanel extends javax.swing.JPanel {
         doneLabel.setVisible(false);
 
         String password = passwordField.getText();
-        System.out.println(password);
 
         if (!commandSender.checkPassword(password)) {
-            JOptionPane.showMessageDialog(null, "Invalid password");
+            JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.InvalidPassword"));
         } else {
 
             commandSender.sendCommand(new ClearCollectionCommand());
@@ -150,9 +168,9 @@ public class ClearCommandPanel extends javax.swing.JPanel {
                 commandResponseReceiver.receiveCommandResponse();
 
                 doneLabel.setVisible(true);
-                doneLabel.setText("Done!");
+                doneLabel.setText(Resources.getResourceBundle().getString("done"));
             } catch (ServerIsDownException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
+                JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
             }
         }
 

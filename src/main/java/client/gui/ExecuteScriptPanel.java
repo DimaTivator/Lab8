@@ -7,8 +7,11 @@ package client.gui;
 import client.CommandResponseReceiver;
 import client.CommandSender;
 import client.gui.workers.ScriptExecutor;
+import client.i10n.Resources;
 
 import javax.swing.*;
+import java.awt.event.WindowAdapter;
+import java.util.ResourceBundle;
 
 
 public class ExecuteScriptPanel extends javax.swing.JPanel {
@@ -26,11 +29,23 @@ public class ExecuteScriptPanel extends javax.swing.JPanel {
         this.commandResponseReceiver = commandResponseReceiver;
     }
 
+
+    private void setLanguages() {
+
+        ResourceBundle resourceBundle = Resources.getResourceBundle();
+
+        sendButton.setText(resourceBundle.getString("send"));
+        argNameLabel.setText(resourceBundle.getString("script_path"));
+    }
+
+
     /**
      * Creates new form ExecuteScriptPanel
      */
     public ExecuteScriptPanel() {
         initComponents();
+
+        setLanguages();
     }
 
     /**
@@ -140,7 +155,7 @@ public class ExecuteScriptPanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(

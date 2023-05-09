@@ -3,18 +3,23 @@ package client.gui;
 import client.Authenticator;
 import client.CommandResponseReceiver;
 import client.CommandSender;
+import client.ConfigSaver;
+import client.i10n.Resources;
 import commonModule.exceptions.InvalidInputException;
 import commonModule.exceptions.serverExceptions.ServerIsDownException;
 
 import javax.swing.*;
 import java.awt.*;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 public class AuthenticationWindow extends javax.swing.JFrame {
 
     private final Authenticator authenticator;
     private final CommandResponseReceiver commandResponseReceiver;
     private final CommandSender commandSender;
+
+    private ResourceBundle resourceBundle = Resources.getResourceBundle();
 
 
     public AuthenticationWindow(Authenticator authenticator, CommandSender commandSender, CommandResponseReceiver commandResponseReceiver) {
@@ -26,6 +31,138 @@ public class AuthenticationWindow extends javax.swing.JFrame {
         initComponents();
         txtUsername.setBackground(new java.awt.Color(0, 0, 0, 1));
         txtPassword.setBackground(new java.awt.Color(0, 0, 0, 1));
+
+        setLanguages();
+
+        pack();
+    }
+
+    private void setLanguages() {
+
+        usernameLabel.setText(resourceBundle.getString("username"));
+        passwordLabel.setText(resourceBundle.getString("password"));
+        txtLoginLabel.setText(resourceBundle.getString("login"));
+        jLabel4.setText(resourceBundle.getString("account_question"));
+        SignUpButton.setText(resourceBundle.getString("sign_up"));
+        logInButton.setText(resourceBundle.getString("log_in"));
+        languageMenu.setText(resourceBundle.getString("language"));
+
+        pack();
+    }
+
+    private void initMenu() {
+        // adding languages menu
+
+        menuBar = new JMenuBar();
+
+        Font font = new Font("Arial", Font.PLAIN, 12);
+
+        menuBar.setFont(font);
+        menuBar.setBorderPainted(false);
+        menuBar.setLayout(new BoxLayout(menuBar, BoxLayout.X_AXIS));
+        menuBar.setForeground(new java.awt.Color(50, 110, 211));
+
+        languageMenu = new JMenu("Language");
+
+
+        russianMenuItem = new JCheckBoxMenuItem("русский");
+        russianMenuItem.setFont(font);
+
+        ukraineMenuItem = new JCheckBoxMenuItem("українська");
+        ukraineMenuItem.setFont(font);
+
+        spanishMenuItem = new JCheckBoxMenuItem("español");
+        spanishMenuItem.setFont(font);
+
+        icelandMenuItem = new JCheckBoxMenuItem("íslenska");
+        icelandMenuItem.setFont(font);
+
+        russianMenuItem.addActionListener(event -> {
+            russianMenuItem.setSelected(true);
+            ukraineMenuItem.setSelected(false);
+            spanishMenuItem.setSelected(false);
+            icelandMenuItem.setSelected(false);
+
+            resourceBundle = ResourceBundle.getBundle("client.i10n.Resources_RU");
+            Resources.setResourceBundle(resourceBundle);
+
+            ConfigSaver.saveConfig("""
+                    {
+                      "language": "russian"
+                    }""");
+
+            setLanguages();
+        });
+
+        ukraineMenuItem.addActionListener(event -> {
+            russianMenuItem.setSelected(false);
+            ukraineMenuItem.setSelected(true);
+            spanishMenuItem.setSelected(false);
+            icelandMenuItem.setSelected(false);
+
+            resourceBundle = ResourceBundle.getBundle("client.i10n.Resources_UA");
+            Resources.setResourceBundle(resourceBundle);
+
+            ConfigSaver.saveConfig("""
+                    {
+                      "language": "ukrainian"
+                    }""");
+
+            setLanguages();
+        });
+
+        spanishMenuItem.addActionListener(event -> {
+            russianMenuItem.setSelected(false);
+            ukraineMenuItem.setSelected(false);
+            spanishMenuItem.setSelected(true);
+            icelandMenuItem.setSelected(false);
+
+            resourceBundle = ResourceBundle.getBundle("client.i10n.Resources_DO");
+            Resources.setResourceBundle(resourceBundle);
+
+            ConfigSaver.saveConfig("""
+                    {
+                      "language": "spanish"
+                    }""");
+
+            setLanguages();
+        });
+
+        icelandMenuItem.addActionListener(event -> {
+            russianMenuItem.setSelected(false);
+            ukraineMenuItem.setSelected(false);
+            spanishMenuItem.setSelected(false);
+            icelandMenuItem.setSelected(true);
+
+            resourceBundle = ResourceBundle.getBundle("client.i10n.Resources_IS");
+            Resources.setResourceBundle(resourceBundle);
+
+            ConfigSaver.saveConfig("""
+                    {
+                      "language": "icelandic"
+                    }""");
+
+            setLanguages();
+        });
+
+        if (resourceBundle.getBaseBundleName().equals("client.i10n.Resources_RU")) {
+            russianMenuItem.setSelected(true);
+        } else if (resourceBundle.getBaseBundleName().equals("client.i10n.Resources_UA")) {
+            ukraineMenuItem.setSelected(true);
+        } else if (resourceBundle.getBaseBundleName().equals("client.i10n.Resource_DO")) {
+            spanishMenuItem.setSelected(true);
+        } else {
+            icelandMenuItem.setSelected(true);
+        }
+
+        languageMenu.add(russianMenuItem);
+        languageMenu.add(ukraineMenuItem);
+        languageMenu.add(spanishMenuItem);
+        languageMenu.add(icelandMenuItem);
+
+        menuBar.add(languageMenu);
+
+        setJMenuBar(menuBar);
     }
 
     /**
@@ -76,7 +213,7 @@ public class AuthenticationWindow extends javax.swing.JFrame {
 
         jPanel2.setBackground(new java.awt.Color(50, 110, 211));
 
-        txtLoginLabel.setFont(new java.awt.Font("Arial", 0, 32)); // NOI18N
+        txtLoginLabel.setFont(new java.awt.Font("Arial", 0, 20)); // NOI18N
         txtLoginLabel.setForeground(new java.awt.Color(255, 255, 255));
         txtLoginLabel.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
         txtLoginLabel.setText("Login");
@@ -117,7 +254,7 @@ public class AuthenticationWindow extends javax.swing.JFrame {
 
         jLabel4.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
         jLabel4.setForeground(new java.awt.Color(199, 226, 255));
-        jLabel4.setText("Don't have an account? ");
+        jLabel4.setText("Don't have an account?");
 
         SignUpButton.setBackground(new java.awt.Color(50, 110, 211));
         SignUpButton.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
@@ -234,70 +371,7 @@ public class AuthenticationWindow extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
         );
 
-        // adding languages menu
-
-        JMenuBar menuBar = new JMenuBar();
-
-        Font font = new Font("Arial", Font.PLAIN, 12);
-
-        menuBar.setFont(font);
-        menuBar.setBorderPainted(false);
-        menuBar.setLayout(new BoxLayout(menuBar, BoxLayout.X_AXIS));
-        menuBar.setForeground(new java.awt.Color(50, 110, 211));
-
-        JMenu languageMenu = new JMenu("Language");
-
-
-        JCheckBoxMenuItem russianMenuItem = new JCheckBoxMenuItem("Русский");
-        russianMenuItem.setFont(font);
-
-        JCheckBoxMenuItem ukraineMenuItem = new JCheckBoxMenuItem("Украинский");
-        ukraineMenuItem.setFont(font);
-
-        JCheckBoxMenuItem spanishMenuItem = new JCheckBoxMenuItem("Испанский");
-        spanishMenuItem.setFont(font);
-
-        JCheckBoxMenuItem islandMenuItem = new JCheckBoxMenuItem("Исландский");
-        islandMenuItem.setFont(font);
-
-        russianMenuItem.addActionListener(event -> {
-            russianMenuItem.setSelected(true);
-            ukraineMenuItem.setSelected(false);
-            spanishMenuItem.setSelected(false);
-            islandMenuItem.setSelected(false);
-        });
-
-        ukraineMenuItem.addActionListener(event -> {
-            russianMenuItem.setSelected(false);
-            ukraineMenuItem.setSelected(true);
-            spanishMenuItem.setSelected(false);
-            islandMenuItem.setSelected(false);
-        });
-
-        spanishMenuItem.addActionListener(event -> {
-            russianMenuItem.setSelected(false);
-            ukraineMenuItem.setSelected(false);
-            spanishMenuItem.setSelected(true);
-            islandMenuItem.setSelected(false);
-        });
-
-        islandMenuItem.addActionListener(event -> {
-            russianMenuItem.setSelected(false);
-            ukraineMenuItem.setSelected(false);
-            spanishMenuItem.setSelected(false);
-            islandMenuItem.setSelected(true);
-        });
-
-        russianMenuItem.setSelected(true);
-
-        languageMenu.add(russianMenuItem);
-        languageMenu.add(ukraineMenuItem);
-        languageMenu.add(spanishMenuItem);
-        languageMenu.add(islandMenuItem);
-
-        menuBar.add(languageMenu);
-
-        setJMenuBar(menuBar);
+        initMenu();
 
         pack();
     }// </editor-fold>
@@ -334,9 +408,12 @@ public class AuthenticationWindow extends javax.swing.JFrame {
 
         try {
             return authenticator.processResponse();
-        } catch (ServerIsDownException | InvalidInputException e) {
+        } catch (ServerIsDownException e) {
             JFrame errorFrame = new JFrame("Error");
-            JOptionPane.showMessageDialog(errorFrame, e.getMessage(), "Ошибка", JOptionPane.ERROR_MESSAGE);
+            JOptionPane.showMessageDialog(errorFrame, Resources.getResourceBundle().getString("error.serverIsDown"), "Ошибка", JOptionPane.ERROR_MESSAGE);
+        } catch (InvalidInputException e) {
+            JFrame errorFrame = new JFrame("Error");
+            JOptionPane.showMessageDialog(errorFrame, Resources.getResourceBundle().getString("error.InvalidInputException"), "Ошибка", JOptionPane.ERROR_MESSAGE);
         }
         return false;
     }
@@ -360,4 +437,11 @@ public class AuthenticationWindow extends javax.swing.JFrame {
     private javax.swing.JLabel usernameIcon;
     private javax.swing.JLabel usernameLabel;
     // End of variables declaration
+
+    private JMenuBar menuBar;
+    private JMenu languageMenu;
+    private JCheckBoxMenuItem russianMenuItem;
+    private JCheckBoxMenuItem ukraineMenuItem;
+    private JCheckBoxMenuItem spanishMenuItem;
+    private JCheckBoxMenuItem icelandMenuItem;
 }

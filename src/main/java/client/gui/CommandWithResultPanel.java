@@ -6,11 +6,13 @@ package client.gui;
 
 import client.CommandResponseReceiver;
 import client.CommandSender;
+import client.i10n.Resources;
 import commonModule.commands.Command;
 import commonModule.exceptions.commandExceptions.InvalidArgumentsException;
 import commonModule.exceptions.serverExceptions.ServerIsDownException;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
 
 /**
  *
@@ -26,6 +28,17 @@ public class CommandWithResultPanel extends javax.swing.JPanel {
 
         this.commandSender = commandSender;
         this.commandResponseReceiver = commandResponseReceiver;
+
+        setLanguages();
+    }
+
+    private void setLanguages() {
+
+        ResourceBundle resourceBundle = Resources.getResourceBundle();
+
+        resultLabel.setText(resourceBundle.getString("result"));
+        argNameLabel.setText(resourceBundle.getString("impact_speed"));
+        sendButton.setText(resourceBundle.getString("send"));
     }
 
     private Command command;
@@ -158,7 +171,7 @@ public class CommandWithResultPanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -182,7 +195,7 @@ public class CommandWithResultPanel extends javax.swing.JPanel {
         try {
             command.setArgs(new String[]{textField.getText()});
         } catch (InvalidArgumentsException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.InvalidArguments") + ":\n" + e.getMessage());
         }
 
         commandSender.sendCommand(command);
@@ -194,10 +207,11 @@ public class CommandWithResultPanel extends javax.swing.JPanel {
             resultValueLabel.setVisible(true);
             resultValueLabel.setText(response);
 
+            doneLabel.setText(Resources.getResourceBundle().getString("done"));
             doneLabel.setVisible(true);
 
         } catch (ServerIsDownException e) {
-            JOptionPane.showMessageDialog(null, "Server is down.\n Please try again later");
+            JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
         }
     }//GEN-LAST:event_sendButtonActionPerformed
 

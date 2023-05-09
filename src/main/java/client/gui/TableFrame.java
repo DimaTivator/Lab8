@@ -10,6 +10,7 @@ import client.gui.graphics.ColorGenerator;
 import client.gui.graphics.HumanPanel;
 import client.gui.workers.Painter;
 import client.gui.workers.ShowWorker;
+import client.i10n.Resources;
 import commonModule.collectionClasses.*;
 import commonModule.commands.Command;
 import commonModule.commands.commandObjects.GetOwnerCommand;
@@ -24,9 +25,13 @@ import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.HashMap;
+import java.text.DateFormat;
+import java.text.NumberFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.util.*;
 
 
 public class TableFrame extends javax.swing.JFrame {
@@ -35,9 +40,11 @@ public class TableFrame extends javax.swing.JFrame {
     private final CommandSender commandSender;
     private final CommandResponseReceiver commandResponseReceiver;
     private final ApplicationWindow applicationWindow;
-    private final HashMap<Long, HumanPanel> humanPanels;
+    private final Map<Long, HumanPanel> humanPanels;
 
-    private final HashMap<Long, HumanBeing> humanBeings;
+    private final Map<Long, HumanBeing> humanBeings;
+
+    private ResourceBundle resourceBundle = Resources.getResourceBundle();
 
     /**
      * Creates new form TableFrame
@@ -47,8 +54,9 @@ public class TableFrame extends javax.swing.JFrame {
         this.commandSender = commandSender;
         this.commandResponseReceiver = commandResponseReceiver;
         this.applicationWindow = applicationWindow;
-        humanBeings = new HashMap<>();
-        humanPanels = new HashMap<>();
+
+        humanBeings = Collections.synchronizedMap(new HashMap<Long, HumanBeing>());
+        humanPanels = Collections.synchronizedMap(new HashMap<Long, HumanPanel>());
 
         initComponents();
         visualizationPanel.setLayout(null);
@@ -63,21 +71,23 @@ public class TableFrame extends javax.swing.JFrame {
             }
         });
 
+
         String[] columns = {
-                "key",
-                "id",
-                "name",
-                "x_coordinate",
-                "y_coordinate",
-                "creation date",
-                "mood",
-                "weapon",
-                "realHero",
-                "impact speed",
-                "hasToothpick",
-                "carName",
-                "carCool"
+                resourceBundle.getString("key"),
+                resourceBundle.getString("id"),
+                resourceBundle.getString("name"),
+                resourceBundle.getString("x_coordinate"),
+                resourceBundle.getString("y_coordinate"),
+                resourceBundle.getString("creation_date"),
+                resourceBundle.getString("mood"),
+                resourceBundle.getString("weapon"),
+                resourceBundle.getString("realHero"),
+                resourceBundle.getString("impact_speed"),
+                resourceBundle.getString("hasToothpick"),
+                resourceBundle.getString("carName"),
+                resourceBundle.getString("carCool")
         };
+
         model = new DefaultTableModel(columns, 0);
         table.setModel(model);
 
@@ -105,19 +115,78 @@ public class TableFrame extends javax.swing.JFrame {
 
 
     private void setSorters() {
-        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
-        for (int i = 0; i < table.getColumnCount(); i++) {
-            sorter.setComparator(i, Comparator.naturalOrder());
-        }
+//        TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
+//        for (int i = 0; i < table.getColumnCount(); i++) {
+//            sorter.setComparator(i, Comparator.naturalOrder());
+//        }
+//        table.setRowSorter(sorter);
+
+        NumberFormat numberFormat = NumberFormat.getInstance(Resources.getCurrentLocale());
+        DateTimeFormatter dateFormatter = DateTimeFormatter.ofPattern("dd.MM.yyyy", Resources.getCurrentLocale());
+
+        TableRowSorter<TableModel> sorter = new TableRowSorter<>(model);
+
+        // компаратор для key, id
+        Comparator<String> intComparator = (s1, s2) -> {
+            try {
+                Integer v1 = numberFormat.parse(s1).intValue();
+                Integer v2 = numberFormat.parse(s2).intValue();
+                return v1.compareTo(v2);
+            } catch (ParseException e) {
+                //System.out.println(e.getMessage());
+            }
+            return 0;
+        };
+
+        sorter.setComparator(0, intComparator);
+        sorter.setComparator(1, intComparator);
+
+        // компаратор для координат и скорости
+
+        Comparator<String> doubleComparator = (s1, s2) -> {
+            try {
+                Double v1 = numberFormat.parse(s1).doubleValue();
+                Double v2 = numberFormat.parse(s2).doubleValue();
+                return v1.compareTo(v2);
+            } catch (ParseException e) {
+                // System.out.println(e.getMessage());
+            }
+            return 0;
+        };
+
+        sorter.setComparator(3, doubleComparator);
+        sorter.setComparator(4, doubleComparator);
+        sorter.setComparator(9, doubleComparator);
+
+
+        Comparator<String> dateComparator = (s1, s2) -> {
+            LocalDate d1 = LocalDate.parse(s1, dateFormatter);
+            LocalDate d2 = LocalDate.parse(s2, dateFormatter);
+            return d1.compareTo(d2);
+        };
+
+        sorter.setComparator(5, dateComparator);
+
+        sorter.setComparator(2, Comparator.naturalOrder());
+        sorter.setComparator(6, Comparator.naturalOrder());
+        sorter.setComparator(7, Comparator.naturalOrder());
+        sorter.setComparator(8, Comparator.naturalOrder());
+        sorter.setComparator(10, Comparator.naturalOrder());
+        sorter.setComparator(11, Comparator.naturalOrder());
+        sorter.setComparator(12, Comparator.naturalOrder());
+
         table.setRowSorter(sorter);
     }
 
 
-    private HumanBeing getRowObject() {
+    private HumanBeing getRowObject() throws ParseException {
 
         int rowIndex = table.getSelectedRow();
 
-        int key = (int) table.getValueAt(rowIndex, 0);
+        // int key = Integer.parseInt(table.getValueAt(rowIndex, 0).toString());
+        // int key = NumberFormat.getInstance(Resources.getCurrentLocale()).parse(table.getValueAt(rowIndex, 0).toString()).intValue();
+        int key = Integer.parseInt(NumberFormat.getInstance(Resources.getCurrentLocale()).parse(table.getValueAt(rowIndex, 0).toString()).toString());
+
 
         return humanBeings.get((long) key);
     }
@@ -128,14 +197,14 @@ public class TableFrame extends javax.swing.JFrame {
         TableColumn column;
         TableCellEditor cellEditor;
 
-        column = table.getColumn("key");
+        column = table.getColumn(resourceBundle.getString("key"));
 
         cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
-                JOptionPane.showMessageDialog(null, "У вас нет доступа к изменению значения этого параметра");
+                JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.AccessError"));
                 cancelCellEditing();
 
                 return false;
@@ -144,10 +213,10 @@ public class TableFrame extends javax.swing.JFrame {
 
         column.setCellEditor(cellEditor);
 
-        column = table.getColumn("id");
+        column = table.getColumn(resourceBundle.getString("id"));
         column.setCellEditor(cellEditor);
 
-        column = table.getColumn("creation date");
+        column = table.getColumn(resourceBundle.getString("creation_date"));
         column.setCellEditor(cellEditor);
 
         setNameCellEditor();
@@ -218,8 +287,8 @@ public class TableFrame extends javax.swing.JFrame {
 
                     public void mousePressed(MouseEvent e) {
                         JOptionPane.showMessageDialog(null,
-                                "id: " + humanPanel.getHumanBeing().getId() + "\n" +
-                                        "name: " + humanPanel.getHumanBeing().getName());
+                            resourceBundle.getString("id") + ": " + humanPanel.getHumanBeing().getId() + "\n" +
+                                    resourceBundle.getString("name") + ": " + humanPanel.getHumanBeing().getName());
                         // System.out.println(humanPanel.getHumanBeing().getName());
                     }
 
@@ -240,6 +309,7 @@ public class TableFrame extends javax.swing.JFrame {
                 });
 
                 humanPanel.setColor(ColorGenerator.getColor(Integer.parseInt(response)));
+                //System.out.println(ColorGenerator.getColor(Integer.parseInt(response)));
                 //humanPanel.setBounds((int) humanBeing.getCoordinates().getX() + 500, (int) Math.ceil(humanBeing.getCoordinates().getY()) + 100, 60, 65);
                 //humanPanel.setBounds((int) humanBeing.getCoordinates().getX() + 500, 0, 60, 300);
                 humanPanel.setBounds((int) humanBeing.getCoordinates().getX() + 500, 0, 60, 65);
@@ -258,7 +328,7 @@ public class TableFrame extends javax.swing.JFrame {
                 visualizationPanel.repaint();
 
             } catch (ServerIsDownException e) {
-                JOptionPane.showMessageDialog(null, e.getMessage());
+                JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }
@@ -268,14 +338,21 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setNameCellEditor() {
 
-        TableColumn column = table.getColumn("name");
+        TableColumn column = table.getColumn(resourceBundle.getString("name"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
                 String input = (String) super.getCellEditorValue();
-                HumanBeing rowObject = getRowObject();
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 String previousName = rowObject.getName();
                 rowObject.setName(input);
@@ -294,12 +371,12 @@ public class TableFrame extends javax.swing.JFrame {
                     try {
                         String response = commandResponseReceiver.receiveCommandResponse();
                         if (!response.strip().equals("Done!")) {
-                            JOptionPane.showMessageDialog(null, response);
+                            JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                         } else {
                             success = true;
                         }
                     } catch (ServerIsDownException e) {
-                        JOptionPane.showMessageDialog(null, e.getMessage());
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                     } finally {
                         cancelCellEditing();
 
@@ -313,7 +390,7 @@ public class TableFrame extends javax.swing.JFrame {
                     }
 
                 } else {
-                    JOptionPane.showMessageDialog(null, "Имя не может быть пустым");
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.EmptyName"));
                     cancelCellEditing();
                 }
 
@@ -327,14 +404,21 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setXCoordinateCellEditor() {
 
-        TableColumn column = table.getColumn("x_coordinate");
+        TableColumn column = table.getColumn(resourceBundle.getString("x_coordinate"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
-                String input = ((String) super.getCellEditorValue()).strip();
-                HumanBeing rowObject = getRowObject();
+                String input = ((String) super.getCellEditorValue()).strip().replace(",", ".");
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 Coordinates previousCoordinates = rowObject.getCoordinates();
                 Coordinates newCoordinates = new Coordinates();
@@ -344,12 +428,12 @@ public class TableFrame extends javax.swing.JFrame {
                     newCoordinates.setY(rowObject.getCoordinates().getY());
 
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Координата должна быть числом");
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.CoordinateFormat"));
                     cancelCellEditing();
                     return true;
 
                 } catch (InvalidCoordinatesException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.InvalidInputException") + ":\n" + e.getMessage());
                     cancelCellEditing();
                     return true;
                 }
@@ -369,12 +453,12 @@ public class TableFrame extends javax.swing.JFrame {
                 try {
                     String response = commandResponseReceiver.receiveCommandResponse();
                     if (!response.strip().equals("Done!")) {
-                        JOptionPane.showMessageDialog(null, response);
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                     } else {
                         success = true;
                     }
                 } catch (ServerIsDownException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                 } finally {
                     cancelCellEditing();
 
@@ -397,29 +481,36 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setYCoordinateCellEditor() {
 
-        TableColumn column = table.getColumn("y_coordinate");
+        TableColumn column = table.getColumn(resourceBundle.getString("y_coordinate"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
-                String input = ((String) super.getCellEditorValue()).strip();
-                HumanBeing rowObject = getRowObject();
+                String input = ((String) super.getCellEditorValue()).strip().replace(",", ".");
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 Coordinates previousCoordinates = rowObject.getCoordinates();
                 Coordinates newCoordinates = new Coordinates();
 
                 try {
                     newCoordinates.setY(Float.parseFloat(input));
-                    newCoordinates.setX(rowObject.getCoordinates().getY());
+                    newCoordinates.setX(rowObject.getCoordinates().getX());
 
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Координата должна быть числом");
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.CoordinateFormat"));
                     cancelCellEditing();
                     return true;
 
                 } catch (InvalidCoordinatesException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.InvalidInputException") + ":\n" + e.getMessage());
                     cancelCellEditing();
                     return true;
                 }
@@ -439,12 +530,12 @@ public class TableFrame extends javax.swing.JFrame {
                 try {
                     String response = commandResponseReceiver.receiveCommandResponse();
                     if (!response.strip().equals("Done!")) {
-                        JOptionPane.showMessageDialog(null, response);
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                     } else {
                         success = true;
                     }
                 } catch (ServerIsDownException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                 } finally {
                     cancelCellEditing();
 
@@ -467,23 +558,30 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setMoodCellEditor() {
 
-        TableColumn column = table.getColumn("mood");
+        TableColumn column = table.getColumn(resourceBundle.getString("mood"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
                 String input = ((String) super.getCellEditorValue()).toUpperCase().strip();
-                HumanBeing rowObject = getRowObject();
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 Mood previousMood = rowObject.getMood();
                 Mood newMood;
 
                 try {
-                    newMood = Mood.valueOf(input);
+                    newMood = Mood.valueOf(resourceBundle.getString(input.toLowerCase()).toUpperCase());
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Некорректное значение мood");
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.MoodError"));
                     cancelCellEditing();
                     return true;
                 }
@@ -503,12 +601,12 @@ public class TableFrame extends javax.swing.JFrame {
                 try {
                     String response = commandResponseReceiver.receiveCommandResponse();
                     if (!response.strip().equals("Done!")) {
-                        JOptionPane.showMessageDialog(null, response);
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                     } else {
                         success = true;
                     }
                 } catch (ServerIsDownException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                 } finally {
                     cancelCellEditing();
 
@@ -531,23 +629,30 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setWeaponCellEditor() {
 
-        TableColumn column = table.getColumn("weapon");
+        TableColumn column = table.getColumn(resourceBundle.getString("weapon"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
                 String input = ((String) super.getCellEditorValue()).toUpperCase().strip();
-                HumanBeing rowObject = getRowObject();
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 WeaponType previousWeapon = rowObject.getWeaponType();
                 WeaponType newWeapon;
 
                 try {
-                    newWeapon = WeaponType.valueOf(input);
+                    newWeapon = WeaponType.valueOf(resourceBundle.getString(input.toLowerCase()).toUpperCase());
 
                 } catch (Exception e) {
-                    JOptionPane.showMessageDialog(null, "Некорректное значение weapon");
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.WeaponType"));
                     cancelCellEditing();
                     return true;
                 }
@@ -567,12 +672,12 @@ public class TableFrame extends javax.swing.JFrame {
                 try {
                     String response = commandResponseReceiver.receiveCommandResponse();
                     if (!response.strip().equals("Done!")) {
-                        JOptionPane.showMessageDialog(null, response);
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                     } else {
                         success = true;
                     }
                 } catch (ServerIsDownException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                 } finally {
                     cancelCellEditing();
 
@@ -595,24 +700,31 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setRealHeroCellEditor() {
 
-        TableColumn column = table.getColumn("realHero");
+        TableColumn column = table.getColumn(resourceBundle.getString("realHero"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
                 String input = ((String) super.getCellEditorValue()).toLowerCase().strip();
-                HumanBeing rowObject = getRowObject();
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 boolean previousRealHero = rowObject.isRealHero();
                 boolean newRealHero;
 
-                if (input.equals("true")) {
+                if (input.equals("true") || input.equals("1")) {
                     newRealHero = true;
-                } else if (input.equals("false")) {
+                } else if (input.equals("false") || input.equals("0")) {
                     newRealHero = false;
                 } else {
-                    JOptionPane.showMessageDialog(null, "realHero должен быть true или false");
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.RealHero"));
                     cancelCellEditing();
                     return true;
                 }
@@ -632,12 +744,12 @@ public class TableFrame extends javax.swing.JFrame {
                 try {
                     String response = commandResponseReceiver.receiveCommandResponse();
                     if (!response.strip().equals("Done!")) {
-                        JOptionPane.showMessageDialog(null, response);
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                     } else {
                         success = true;
                     }
                 } catch (ServerIsDownException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                 } finally {
                     cancelCellEditing();
 
@@ -660,14 +772,21 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setHasToothpickCellEditor() {
 
-        TableColumn column = table.getColumn("hasToothpick");
+        TableColumn column = table.getColumn(resourceBundle.getString("hasToothpick"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
                 String input = ((String) super.getCellEditorValue()).toLowerCase().strip();
-                HumanBeing rowObject = getRowObject();
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 boolean previousHasToothpick = rowObject.isHasToothpick();
                 boolean newHasToothpick;
@@ -677,7 +796,7 @@ public class TableFrame extends javax.swing.JFrame {
                 } else if (input.equals("false")) {
                     newHasToothpick = false;
                 } else {
-                    JOptionPane.showMessageDialog(null, "hasToothpick должен быть true или false");
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.HasToothpick"));
                     cancelCellEditing();
                     return true;
                 }
@@ -697,12 +816,12 @@ public class TableFrame extends javax.swing.JFrame {
                 try {
                     String response = commandResponseReceiver.receiveCommandResponse();
                     if (!response.strip().equals("Done!")) {
-                        JOptionPane.showMessageDialog(null, response);
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                     } else {
                         success = true;
                     }
                 } catch (ServerIsDownException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                 } finally {
                     cancelCellEditing();
 
@@ -725,14 +844,21 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setImpactSpeedCellEditor() {
 
-        TableColumn column = table.getColumn("impact speed");
+        TableColumn column = table.getColumn(resourceBundle.getString("impact_speed"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
                 String input = ((String) super.getCellEditorValue()).strip();
-                HumanBeing rowObject = getRowObject();
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 double previousImpactSpeed = rowObject.getImpactSpeed();
                 double newImpactSpeed;
@@ -741,7 +867,7 @@ public class TableFrame extends javax.swing.JFrame {
                     newImpactSpeed = Double.parseDouble(input);
 
                 } catch (NumberFormatException e) {
-                    JOptionPane.showMessageDialog(null, "Значение impact speed должно быть числом");
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ImpactSpeed"));
                     cancelCellEditing();
                     return true;
 
@@ -762,12 +888,12 @@ public class TableFrame extends javax.swing.JFrame {
                 try {
                     String response = commandResponseReceiver.receiveCommandResponse();
                     if (!response.strip().equals("Done!")) {
-                        JOptionPane.showMessageDialog(null, response);
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                     } else {
                         success = true;
                     }
                 } catch (ServerIsDownException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                 } finally {
                     cancelCellEditing();
 
@@ -790,14 +916,21 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setCarNameCellEditor() {
 
-        TableColumn column = table.getColumn("carName");
+        TableColumn column = table.getColumn(resourceBundle.getString("carName"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
                 String newCarName = ((String) super.getCellEditorValue()).strip();
-                HumanBeing rowObject = getRowObject();
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 String previousCarName = rowObject.getCar().getName();
 
@@ -817,12 +950,12 @@ public class TableFrame extends javax.swing.JFrame {
                 try {
                     String response = commandResponseReceiver.receiveCommandResponse();
                     if (!response.strip().equals("Done!")) {
-                        JOptionPane.showMessageDialog(null, response);
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                     } else {
                         success = true;
                     }
                 } catch (ServerIsDownException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                 } finally {
                     cancelCellEditing();
 
@@ -845,14 +978,21 @@ public class TableFrame extends javax.swing.JFrame {
 
     private void setCarCoolCellEditor() {
 
-        TableColumn column = table.getColumn("carCool");
+        TableColumn column = table.getColumn(resourceBundle.getString("carCool"));
         TableCellEditor cellEditor = new DefaultCellEditor(new JTextField()) {
 
             @Override
             public boolean stopCellEditing() {
 
                 String input = ((String) super.getCellEditorValue()).strip();
-                HumanBeing rowObject = getRowObject();
+                HumanBeing rowObject;
+
+                try {
+                    rowObject = getRowObject();
+                } catch (ParseException e) {
+                    cancelCellEditing();
+                    return false;
+                }
 
                 boolean previousCarCool = rowObject.getCar().getCool();
                 boolean newCarCool;
@@ -862,7 +1002,7 @@ public class TableFrame extends javax.swing.JFrame {
                 } else if (input.equals("false")) {
                     newCarCool = false;
                 } else {
-                    JOptionPane.showMessageDialog(null, "carCool должно быть true или false");
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.CarCoolError"));
                     cancelCellEditing();
                     return true;
                 }
@@ -882,12 +1022,12 @@ public class TableFrame extends javax.swing.JFrame {
                 try {
                     String response = commandResponseReceiver.receiveCommandResponse();
                     if (!response.strip().equals("Done!")) {
-                        JOptionPane.showMessageDialog(null, response);
+                        JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + ": \n" + response);
                     } else {
                         success = true;
                     }
                 } catch (ServerIsDownException e) {
-                    JOptionPane.showMessageDialog(null, e.getMessage());
+                    JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
                 } finally {
                     cancelCellEditing();
 

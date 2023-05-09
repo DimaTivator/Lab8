@@ -7,12 +7,14 @@ package client.gui;
 import client.Authenticator;
 import client.CommandResponseReceiver;
 import client.CommandSender;
+import client.i10n.Resources;
 import commonModule.commands.Command;
 import commonModule.commands.commandObjects.*;
 import commonModule.exceptions.serverExceptions.ServerIsDownException;
 
 import javax.swing.*;
 import java.awt.*;
+import java.util.ResourceBundle;
 
 
 public class ApplicationWindow extends javax.swing.JFrame {
@@ -20,6 +22,8 @@ public class ApplicationWindow extends javax.swing.JFrame {
     private final CommandSender commandSender;
     private final CommandResponseReceiver commandResponseReceiver;
     private final Authenticator authenticator;
+
+    private ResourceBundle resourceBundle = Resources.getResourceBundle();
 
     private boolean tableIsOpened = false;
 
@@ -35,12 +39,92 @@ public class ApplicationWindow extends javax.swing.JFrame {
      * Creates new form ApplicationWindow
      */
     public ApplicationWindow(Authenticator authenticator, CommandSender commandSender, CommandResponseReceiver commandResponseReceiver) {
-        initComponents();
-        usernameLabel.setText(authenticator.getLogin());
 
         this.commandSender = commandSender;
         this.commandResponseReceiver = commandResponseReceiver;
         this.authenticator = authenticator;
+        this.resourceBundle = resourceBundle;
+
+        initComponents();
+        usernameLabel.setText(authenticator.getLogin());
+
+        setLanguages();
+
+    }
+
+    private void setLanguages() {
+
+        helpButton.setBackground(new java.awt.Color(246, 246, 246));
+        helpButton.setForeground(new java.awt.Color(255, 255, 255));
+        helpButton.setText(resourceBundle.getString("help"));
+        helpButton.setBorder(null);
+
+        infoButton.setBackground(new java.awt.Color(246, 246, 246));
+        infoButton.setForeground(new java.awt.Color(255, 255, 255));
+        infoButton.setText(resourceBundle.getString("info"));
+        infoButton.setBorder(null);
+
+
+        showButton.setBackground(new java.awt.Color(246, 246, 246));
+        showButton.setForeground(new java.awt.Color(255, 255, 255));
+        showButton.setText(resourceBundle.getString("show"));
+        showButton.setBorder(null);
+
+        insertButton.setBackground(new java.awt.Color(246, 246, 246));
+        insertButton.setForeground(new java.awt.Color(255, 255, 255));
+        insertButton.setText(resourceBundle.getString("insert"));
+        insertButton.setBorder(null);
+
+        updateButton.setBackground(new java.awt.Color(246, 246, 246));
+        updateButton.setForeground(new java.awt.Color(255, 255, 255));
+        updateButton.setText(resourceBundle.getString("update"));
+        updateButton.setBorder(null);
+
+        removeButton.setBackground(new java.awt.Color(246, 246, 246));
+        removeButton.setForeground(new java.awt.Color(255, 255, 255));
+        removeButton.setText(resourceBundle.getString("remove"));
+        removeButton.setBorder(null);
+
+        clearButton.setBackground(new java.awt.Color(246, 246, 246));
+        clearButton.setForeground(new java.awt.Color(255, 255, 255));
+        clearButton.setText(resourceBundle.getString("clear"));
+        clearButton.setBorder(null);
+
+        executeScriptButton.setBackground(new java.awt.Color(246, 246, 246));
+        executeScriptButton.setForeground(new java.awt.Color(255, 255, 255));
+        executeScriptButton.setText(resourceBundle.getString("execute_script"));
+        executeScriptButton.setBorder(null);
+
+        removeLowerButton.setBackground(new java.awt.Color(246, 246, 246));
+        removeLowerButton.setForeground(new java.awt.Color(255, 255, 255));
+        removeLowerButton.setText(resourceBundle.getString("remove_lower"));
+        removeLowerButton.setBorder(null);
+
+        replaceIfGreaterButton.setBackground(new java.awt.Color(246, 246, 246));
+        replaceIfGreaterButton.setForeground(new java.awt.Color(255, 255, 255));
+        replaceIfGreaterButton.setText(resourceBundle.getString("replace_if_greater"));
+        replaceIfGreaterButton.setBorder(null);
+
+        removeGreaterButton.setBackground(new java.awt.Color(246, 246, 246));
+        removeGreaterButton.setForeground(new java.awt.Color(255, 255, 255));
+        removeGreaterButton.setText(resourceBundle.getString("remove_greater"));
+        removeGreaterButton.setBorder(null);
+
+        countImpactSpeedButton.setBackground(new java.awt.Color(246, 246, 246));
+        countImpactSpeedButton.setForeground(new java.awt.Color(255, 255, 255));
+        countImpactSpeedButton.setText(resourceBundle.getString("count_impact_speed"));
+        countImpactSpeedButton.setBorder(null);
+
+        filterCarButton.setBackground(new java.awt.Color(246, 246, 246));
+        filterCarButton.setForeground(new java.awt.Color(255, 255, 255));
+        filterCarButton.setText(resourceBundle.getString("filter_car"));
+        filterCarButton.setBorder(null);
+
+        uniqueMoodButton.setBackground(new java.awt.Color(246, 246, 246));
+        uniqueMoodButton.setForeground(new java.awt.Color(255, 255, 255));
+        uniqueMoodButton.setText(resourceBundle.getString("unique_mood"));
+        uniqueMoodButton.setBorder(null);
+
     }
 
     /**
@@ -412,7 +496,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(usernameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 103, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(commandsButtonsPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 68, Short.MAX_VALUE)
                 .addComponent(interactionPanel, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
@@ -451,7 +535,7 @@ public class ApplicationWindow extends javax.swing.JFrame {
             String responseText = commandResponseReceiver.receiveCommandResponse();
             textCommandPanel.setText(responseText.replaceAll("LINE_BREAK", ""));
         } catch (ServerIsDownException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
         }
 
         revalidate();

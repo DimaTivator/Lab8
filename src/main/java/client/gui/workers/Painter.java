@@ -12,6 +12,8 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+
+
 public class Painter extends SwingWorker<Void, Object[]> {
 
     private final DefaultTableModel model;
@@ -22,7 +24,7 @@ public class Painter extends SwingWorker<Void, Object[]> {
     private final TableFrame tableFrame;
 
     public Painter(DefaultTableModel model, CommandSender commandSender, CommandResponseReceiver commandResponseReceiver,
-                      HashMap<Long, HumanBeing> humanBeings, JPanel visualizationPanel, TableFrame tableFrame) {
+                      Map<Long, HumanBeing> humanBeings, JPanel visualizationPanel, TableFrame tableFrame) {
 
         this.model = model;
         this.commandSender = commandSender;

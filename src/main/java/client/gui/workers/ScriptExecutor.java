@@ -2,6 +2,7 @@ package client.gui.workers;
 
 import client.CommandResponseReceiver;
 import client.CommandSender;
+import client.i10n.Resources;
 import commonModule.commands.Command;
 import commonModule.dataStructures.Triplet;
 import commonModule.exceptions.ScriptsRecursionException;
@@ -54,7 +55,7 @@ public class ScriptExecutor extends SwingWorker<Void, String> {
 
             if (commandName.equals("execute_script")) {
                 if (usedScripts.contains(args[0])) {
-                    throw new ScriptsRecursionException("You should not call execute_script recursively!");
+                    throw new ScriptsRecursionException(Resources.getResourceBundle().getString("error.script_recursion"));
                 }
                 usedScripts.add(args[0]);
                 ScriptExecutor scriptExecutor = new ScriptExecutor(args[0], commandSender, commandResponseReceiver, resultTextField, doneLabel);
@@ -87,10 +88,10 @@ public class ScriptExecutor extends SwingWorker<Void, String> {
         try {
             get();
             doneLabel.setVisible(true);
-            doneLabel.setText("Done!");
+            doneLabel.setText(Resources.getResourceBundle().getString("done"));
         } catch (Exception e) {
             if (e.getMessage().contains("java.io.FileNotFoundException")) {
-                JOptionPane.showMessageDialog(null, "No such file or directory: " + filePath);
+                JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.noSuchFile") + ": " + filePath);
             } else {
                 JOptionPane.showMessageDialog(null, e.getMessage());
             }

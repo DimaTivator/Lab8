@@ -2,6 +2,7 @@ package client;
 
 import client.gui.AuthenticationWindow;
 import client.gui.ApplicationWindow;
+import client.i10n.Resources;
 import commonModule.auxiliaryClasses.ConsoleColors;
 import commonModule.commands.Command;
 import commonModule.dataStructures.network.*;
@@ -15,7 +16,9 @@ import java.net.UnknownHostException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.NoSuchElementException;
+import java.util.*;
+
+import com.google.gson.Gson;
 
 public class Client {
 
@@ -46,6 +49,39 @@ public class Client {
             CommandResponseReceiver commandResponseReceiver = new CommandResponseReceiver(networkProvider);
 
 
+            Gson gson = new Gson();
+            String json = new String(Files.readAllBytes(Paths.get("config.json")));
+            HashMap<String, Object> configJSON = gson.fromJson(json, HashMap.class);
+
+            ResourceBundle resourceBundle;
+            Locale locale;
+
+            switch (configJSON.get("language").toString()) {
+
+                case "ukrainian" -> {
+                    resourceBundle = ResourceBundle.getBundle("client.i10n.Resources_UA");
+                    locale = new Locale("uk", "UA");
+                }
+
+                case "spanish" -> {
+                    resourceBundle = ResourceBundle.getBundle("client.i10n.Resources_DO");
+                    locale = new Locale("es", "DO");
+                }
+
+                case "icelandic" -> {
+                    resourceBundle = ResourceBundle.getBundle("client.i10n.Resources_IS");
+                    locale = new Locale("is", "IS");
+                }
+
+                default -> {
+                    resourceBundle = ResourceBundle.getBundle("client.i10n.Resources_RU");
+                    locale = new Locale("ru", "RU");
+                }
+            }
+
+            Resources.setResourceBundle(resourceBundle);
+            Resources.setCurrentLocale(locale);
+
             // Creating windows
             SwingUtilities.invokeLater(() -> {
                 java.awt.EventQueue.invokeLater(() -> {
@@ -54,72 +90,6 @@ public class Client {
                 });
             });
 
-
-//            while (true) {
-//
-//                try {
-//
-//                    Triplet<String, String[], Object> parsedInput = commandParser.readObjectFromConsole();
-//                    commandName = parsedInput.getFirst();
-//                    commandArgs = parsedInput.getSecond();
-//                    Object object = parsedInput.getThird();
-//
-//                    if (commandName.equals("exit")) {
-//                        if (commandArgs.length == 0) {
-//                            System.out.println(ConsoleColors.PURPLE + "Bye!" + ConsoleColors.RESET);
-//                            System.exit(0);
-//                        } else {
-//                            throw new InvalidArgumentsException("Command exit doesn't take any arguments!");
-//                        }
-//                    }
-//
-//                    else if (commandName.equals("execute_script")) {
-//                        if (commandArgs.length == 1) {
-//                            scriptExecutor.executeScript(commandArgs[0], networkProvider, authenticator);
-//                        } else {
-//                            throw new InvalidArgumentsException("Command execute_script take only one argument - path to the script");
-//                        }
-//
-//                    } else {
-//
-//                        Command command = commandParser.pack(parsedInput);
-//
-//                        request = new CommandRequest(command);
-//                        request.setLogin(authenticator.getLogin());
-//                        request.setPassword(authenticator.getPassword());
-//
-//                        networkProvider.send(request);
-//                        response = networkProvider.receive();
-//
-//                        if (response == null) {
-//                            System.out.println(ConsoleColors.RED + "Server is down :(\nPlease try again later" + ConsoleColors.RESET);
-//                        }
-//
-//                        if (response.getClass() == SizeResponse.class) {
-//
-//                            sizeResponse = (SizeResponse) response;
-//                            numberOfPackages = Integer.parseInt(sizeResponse.getSize());
-//
-//                            for (int i = 0; i < numberOfPackages; i++) {
-//                                response = networkProvider.receive();
-//                                if (response == null) {
-//                                    System.out.println(ConsoleColors.RED + "Server is down :(\nPlease try again later" + ConsoleColors.RESET);
-//                                } else {
-//                                    System.out.println(((CommandResponse)response).getOutput());
-//                                }
-//                            }
-//
-//                        } else {
-//                            System.out.println(((CommandResponse)response).getOutput());
-//                        }
-//                    }
-//
-//                } catch (NoSuchElementException e) {
-//                    break;
-//                } catch (Exception e) {
-//                    System.out.println(e.getMessage());
-//                }
-//            }
         }
         catch (Exception e) {
             JOptionPane.showMessageDialog(null, e.getMessage());

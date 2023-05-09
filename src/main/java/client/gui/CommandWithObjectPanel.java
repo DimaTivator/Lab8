@@ -6,6 +6,7 @@ package client.gui;
 
 import client.CommandResponseReceiver;
 import client.CommandSender;
+import client.i10n.Resources;
 import commonModule.collectionClasses.*;
 import commonModule.commands.Command;
 import commonModule.dataStructures.network.CommandRequest;
@@ -17,6 +18,7 @@ import commonModule.io.HumanBeingParser;
 
 import javax.swing.*;
 import java.util.Objects;
+import java.util.ResourceBundle;
 
 
 public class CommandWithObjectPanel extends javax.swing.JPanel {
@@ -37,7 +39,42 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         this.commandResponseReceiver = commandResponseReceiver;
 
         initComponents();
+
+        setLanguages();
     }
+
+
+    private void setLanguages() {
+
+        ResourceBundle resourceBundle = Resources.getResourceBundle();
+
+        keyLabel.setText(resourceBundle.getString("key"));
+        nameLabel.setText(resourceBundle.getString("name"));
+        coordinatesLabel.setText(resourceBundle.getString("coordinates"));
+        realHeroLabel.setText(resourceBundle.getString("realHero"));
+        impactSpeedLabel.setText(resourceBundle.getString("impact_speed"));
+        hasToothpickLabel.setText(resourceBundle.getString("hasToothpick"));
+        carNameLabel.setText(resourceBundle.getString("carName"));
+        carCoolLabel.setText(resourceBundle.getString("carCool"));
+        moodLabel.setText(resourceBundle.getString("mood"));
+        weaponLabel.setText(resourceBundle.getString("weapon"));
+
+        moodComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
+                resourceBundle.getString("sadness"),
+                resourceBundle.getString("apathy"),
+                resourceBundle.getString("longing"),
+                resourceBundle.getString("rage")
+        }));
+
+        weaponComboBox.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] {
+                resourceBundle.getString("axe"),
+                resourceBundle.getString("rifle"),
+                resourceBundle.getString("knife")
+        }));
+
+        sendButton.setText(resourceBundle.getString("send"));
+    }
+
 
     public JLabel getDoneLabel() {
         return doneLabel;
@@ -78,25 +115,25 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         menu1 = new java.awt.Menu();
         menu2 = new java.awt.Menu();
         jPanel1 = new javax.swing.JPanel();
-        jLabel1 = new javax.swing.JLabel();
+        keyLabel = new javax.swing.JLabel();
         jSeparator1 = new javax.swing.JSeparator();
         keyTextField = new javax.swing.JTextField();
-        jLabel2 = new javax.swing.JLabel();
+        nameLabel = new javax.swing.JLabel();
         nameTextField = new javax.swing.JTextField();
-        jLabel3 = new javax.swing.JLabel();
+        coordinatesLabel = new javax.swing.JLabel();
         coordinatesFieldName = new javax.swing.JTextField();
         jSeparator3 = new javax.swing.JSeparator();
-        jLabel4 = new javax.swing.JLabel();
+        realHeroLabel = new javax.swing.JLabel();
         realHeroTextField = new javax.swing.JTextField();
-        jLabel5 = new javax.swing.JLabel();
+        impactSpeedLabel = new javax.swing.JLabel();
         impactSpeedTextField = new javax.swing.JTextField();
-        jLabel6 = new javax.swing.JLabel();
+        hasToothpickLabel = new javax.swing.JLabel();
         hasToothpickTextField = new javax.swing.JTextField();
         jSeparator6 = new javax.swing.JSeparator();
-        jLabel7 = new javax.swing.JLabel();
+        carNameLabel = new javax.swing.JLabel();
         carNameTextField = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
-        jLabel8 = new javax.swing.JLabel();
+        carCoolLabel = new javax.swing.JLabel();
         coolTextField = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
         moodComboBox = new javax.swing.JComboBox<>();
@@ -104,8 +141,8 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jSeparator9 = new javax.swing.JSeparator();
         jSeparator10 = new javax.swing.JSeparator();
         jSeparator11 = new javax.swing.JSeparator();
-        jLabel9 = new javax.swing.JLabel();
-        jLabel10 = new javax.swing.JLabel();
+        moodLabel = new javax.swing.JLabel();
+        weaponLabel = new javax.swing.JLabel();
         sendButton = new javax.swing.JButton();
         doneLabel = new javax.swing.JLabel();
 
@@ -164,10 +201,10 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         jPanel1.setOpaque(false);
         jPanel1.setPreferredSize(new java.awt.Dimension(684, 520));
 
-        jLabel1.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel1.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel1.setText("key");
-        jLabel1.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        keyLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        keyLabel.setForeground(new java.awt.Color(50, 110, 211));
+        keyLabel.setText("key");
+        keyLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         jSeparator1.setForeground(new java.awt.Color(50, 110, 211));
 
@@ -182,10 +219,10 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel2.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel2.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel2.setText("name");
-        jLabel2.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        nameLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        nameLabel.setForeground(new java.awt.Color(50, 110, 211));
+        nameLabel.setText("name");
+        nameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         nameTextField.setBackground(new java.awt.Color(238, 238, 238));
         nameTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
@@ -198,10 +235,10 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel3.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel3.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel3.setText("coordinates");
-        jLabel3.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        coordinatesLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        coordinatesLabel.setForeground(new java.awt.Color(50, 110, 211));
+        coordinatesLabel.setText("coordinates");
+        coordinatesLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         coordinatesFieldName.setBackground(new java.awt.Color(238, 238, 238));
         coordinatesFieldName.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
@@ -216,10 +253,10 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
 
         jSeparator3.setForeground(new java.awt.Color(50, 110, 211));
 
-        jLabel4.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel4.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel4.setText("real hero (true / false)");
-        jLabel4.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        realHeroLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        realHeroLabel.setForeground(new java.awt.Color(50, 110, 211));
+        realHeroLabel.setText("real hero (true / false)");
+        realHeroLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         realHeroTextField.setBackground(new java.awt.Color(238, 238, 238));
         realHeroTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
@@ -232,10 +269,10 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel5.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel5.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel5.setText("impact speed");
-        jLabel5.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        impactSpeedLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        impactSpeedLabel.setForeground(new java.awt.Color(50, 110, 211));
+        impactSpeedLabel.setText("impact speed");
+        impactSpeedLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         impactSpeedTextField.setBackground(new java.awt.Color(238, 238, 238));
         impactSpeedTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
@@ -248,10 +285,10 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
             }
         });
 
-        jLabel6.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel6.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel6.setText("has toothpick (true / false)");
-        jLabel6.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        hasToothpickLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        hasToothpickLabel.setForeground(new java.awt.Color(50, 110, 211));
+        hasToothpickLabel.setText("has toothpick (true / false)");
+        hasToothpickLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         hasToothpickTextField.setBackground(new java.awt.Color(238, 238, 238));
         hasToothpickTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
@@ -266,10 +303,10 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
 
         jSeparator6.setForeground(new java.awt.Color(50, 110, 211));
 
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel7.setText("car name");
-        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        carNameLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        carNameLabel.setForeground(new java.awt.Color(50, 110, 211));
+        carNameLabel.setText("car name");
+        carNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         carNameTextField.setBackground(new java.awt.Color(238, 238, 238));
         carNameTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
@@ -284,10 +321,10 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
 
         jSeparator7.setForeground(new java.awt.Color(50, 110, 211));
 
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel8.setText("cool (true / false)");
-        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        carCoolLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        carCoolLabel.setForeground(new java.awt.Color(50, 110, 211));
+        carCoolLabel.setText("cool (true / false)");
+        carCoolLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         coolTextField.setBackground(new java.awt.Color(238, 238, 238));
         coolTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
@@ -324,15 +361,15 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
 
         jSeparator11.setForeground(new java.awt.Color(50, 110, 211));
 
-        jLabel9.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel9.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel9.setText("mood");
-        jLabel9.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        moodLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        moodLabel.setForeground(new java.awt.Color(50, 110, 211));
+        moodLabel.setText("mood");
+        moodLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
-        jLabel10.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel10.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel10.setText("weapon");
-        jLabel10.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        weaponLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        weaponLabel.setForeground(new java.awt.Color(50, 110, 211));
+        weaponLabel.setText("weapon");
+        weaponLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         sendButton.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         sendButton.setForeground(new java.awt.Color(50, 110, 211));
@@ -353,11 +390,11 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                         .addComponent(jSeparator8)
-                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel5, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addComponent(jLabel4, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(jLabel6, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(carCoolLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(carNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(impactSpeedLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(realHeroLabel, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(hasToothpickLabel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(nameTextField)
                         .addComponent(coordinatesFieldName)
                         .addComponent(realHeroTextField)
@@ -367,9 +404,9 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
                     .addComponent(keyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 155, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(hasToothpickTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(keyLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(nameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(coordinatesLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jSeparator1)
                     .addComponent(jSeparator9)
                     .addComponent(jSeparator10)
@@ -379,10 +416,10 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(moodComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 121, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel9, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(moodLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 118, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(24, 24, 24)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel10, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(weaponLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 127, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(weaponComboBox, javax.swing.GroupLayout.PREFERRED_SIZE, 133, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(96, 96, 96)
                 .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -395,9 +432,9 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(jLabel1)
-                            .addComponent(jLabel9)
-                            .addComponent(jLabel10))
+                            .addComponent(keyLabel)
+                            .addComponent(moodLabel)
+                            .addComponent(weaponLabel))
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(keyTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -407,43 +444,43 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
                         .addGap(6, 6, 6)
                         .addComponent(jSeparator1, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel2)
+                        .addComponent(nameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(nameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 22, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator9, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel3)
+                        .addComponent(coordinatesLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(coordinatesFieldName, javax.swing.GroupLayout.PREFERRED_SIZE, 18, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator3, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel4)
+                        .addComponent(realHeroLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(realHeroTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(jSeparator10, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel5)
+                        .addComponent(impactSpeedLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(impactSpeedTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(5, 5, 5)
                         .addComponent(jSeparator11, javax.swing.GroupLayout.PREFERRED_SIZE, 10, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(jLabel6)
+                        .addComponent(hasToothpickLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(hasToothpickTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator6, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel7)
+                        .addComponent(carNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(carNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jLabel8)
+                        .addComponent(carCoolLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(coolTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -464,7 +501,7 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
                 .addGap(0, 0, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap())
         );
         layout.setVerticalGroup(
@@ -521,6 +558,8 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
 
         doneLabel.setVisible(false);
 
+        ResourceBundle resourceBundle = Resources.getResourceBundle();
+
         HumanBeing humanBeing = new HumanBeing();
 
         try {
@@ -533,14 +572,16 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
             humanBeing.setCoordinates(coordinates);
 
         } catch (InvalidArgumentsException | InvalidInputException | InvalidCoordinatesException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.InvalidInput") + ": \n" + e.getMessage());
             return;
         }
 
-        Mood mood = Mood.valueOf(Objects.requireNonNull(moodComboBox.getSelectedItem()).toString().toUpperCase());
+        // Mood mood = Mood.valueOf(Objects.requireNonNull(moodComboBox.getSelectedItem()).toString().toUpperCase());
+        Mood mood = Mood.valueOf(resourceBundle.getString(Objects.requireNonNull(moodComboBox.getSelectedItem()).toString()).toUpperCase());
         humanBeing.setMood(mood);
 
-        WeaponType weaponType = WeaponType.valueOf(Objects.requireNonNull(weaponComboBox.getSelectedItem()).toString().toUpperCase());
+        // WeaponType weaponType = WeaponType.valueOf(Objects.requireNonNull(weaponComboBox.getSelectedItem()).toString().toUpperCase());
+        WeaponType weaponType = WeaponType.valueOf(resourceBundle.getString(Objects.requireNonNull(weaponComboBox.getSelectedItem()).toString()).toUpperCase());
         humanBeing.setWeaponType(weaponType);
 
         boolean realHero = Boolean.parseBoolean(realHeroTextField.getText());
@@ -550,7 +591,7 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
             double impactSpeed = Double.parseDouble(impactSpeedTextField.getText());
             humanBeing.setImpactSpeed(impactSpeed);
         } catch (NumberFormatException e) {
-            JOptionPane.showMessageDialog(null, "Impact speed must be a number");
+            JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ImpactSpeed"));
         }
 
         boolean hasToothpick = Boolean.parseBoolean(hasToothpickTextField.getText());
@@ -582,35 +623,30 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
         try {
             String response = commandResponseReceiver.receiveCommandResponse();
             if (response.equals("Done!")) {
-                doneLabel.setText("Done!");
+                doneLabel.setText(Resources.getResourceBundle().getString("done"));
                 doneLabel.setVisible(true);
             } else {
-                JOptionPane.showMessageDialog(null, response);
+                JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.ResponseError") + "\n" + response);
             }
         } catch (ServerIsDownException e) {
-            JOptionPane.showMessageDialog(null, "Server is down.\n Please try again later");
+            JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
         }
     }//GEN-LAST:event_sendButtonActionPerformed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel carCoolLabel;
+    private javax.swing.JLabel carNameLabel;
     private javax.swing.JTextField carNameTextField;
     private javax.swing.JTextField coolTextField;
     private javax.swing.JTextField coordinatesFieldName;
+    private javax.swing.JLabel coordinatesLabel;
     private javax.swing.JLabel doneLabel;
+    private javax.swing.JLabel hasToothpickLabel;
     private javax.swing.JTextField hasToothpickTextField;
+    private javax.swing.JLabel impactSpeedLabel;
     private javax.swing.JTextField impactSpeedTextField;
     private javax.swing.JCheckBoxMenuItem jCheckBoxMenuItem1;
-    private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel10;
-    private javax.swing.JLabel jLabel2;
-    private javax.swing.JLabel jLabel3;
-    private javax.swing.JLabel jLabel4;
-    private javax.swing.JLabel jLabel5;
-    private javax.swing.JLabel jLabel6;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu10;
     private javax.swing.JMenu jMenu11;
@@ -640,15 +676,20 @@ public class CommandWithObjectPanel extends javax.swing.JPanel {
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
     private javax.swing.JSeparator jSeparator9;
+    private javax.swing.JLabel keyLabel;
     private javax.swing.JTextField keyTextField;
     private java.awt.Menu menu1;
     private java.awt.Menu menu2;
     private java.awt.MenuBar menuBar1;
     private javax.swing.JComboBox<String> moodComboBox;
+    private javax.swing.JLabel moodLabel;
+    private javax.swing.JLabel nameLabel;
     private javax.swing.JTextField nameTextField;
     private java.awt.PopupMenu popupMenu1;
+    private javax.swing.JLabel realHeroLabel;
     private javax.swing.JTextField realHeroTextField;
     private javax.swing.JButton sendButton;
     private javax.swing.JComboBox<String> weaponComboBox;
+    private javax.swing.JLabel weaponLabel;
     // End of variables declaration//GEN-END:variables
 }

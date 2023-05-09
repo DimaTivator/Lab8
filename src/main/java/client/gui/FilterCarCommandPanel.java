@@ -6,11 +6,13 @@ package client.gui;
 
 import client.CommandResponseReceiver;
 import client.CommandSender;
+import client.i10n.Resources;
 import commonModule.collectionClasses.Car;
 import commonModule.commands.Command;
 import commonModule.exceptions.serverExceptions.ServerIsDownException;
 
 import javax.swing.*;
+import java.util.ResourceBundle;
 
 
 public class FilterCarCommandPanel extends javax.swing.JPanel {
@@ -27,7 +29,20 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
 
         this.commandSender = commandSender;
         this.commandResponseReceiver = commandResponseReceiver;
+
+        setLanguages();
     }
+
+
+    private void setLanguages() {
+
+        ResourceBundle resourceBundle = Resources.getResourceBundle();
+
+        carNameLabel.setText(resourceBundle.getString("carName"));
+        carCoolLabel.setText(resourceBundle.getString("carCool"));
+        sendButton.setText(resourceBundle.getString("send"));
+    }
+
 
     public JLabel getDoneLabel() {
         return doneLabel;
@@ -52,10 +67,10 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
 
         coolTextField = new javax.swing.JTextField();
         jSeparator8 = new javax.swing.JSeparator();
-        jLabel7 = new javax.swing.JLabel();
+        carNameLabel = new javax.swing.JLabel();
         carNameTextField = new javax.swing.JTextField();
         jSeparator7 = new javax.swing.JSeparator();
-        jLabel8 = new javax.swing.JLabel();
+        carCoolLabel = new javax.swing.JLabel();
         doneLabel = new javax.swing.JLabel();
         sendButton = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -74,10 +89,10 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
 
         jSeparator8.setForeground(new java.awt.Color(50, 110, 211));
 
-        jLabel7.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel7.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel7.setText("car name");
-        jLabel7.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        carNameLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        carNameLabel.setForeground(new java.awt.Color(50, 110, 211));
+        carNameLabel.setText("car name");
+        carNameLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         carNameTextField.setBackground(new java.awt.Color(238, 238, 238));
         carNameTextField.setFont(new java.awt.Font("Arial", 0, 15)); // NOI18N
@@ -92,10 +107,10 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
 
         jSeparator7.setForeground(new java.awt.Color(50, 110, 211));
 
-        jLabel8.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
-        jLabel8.setForeground(new java.awt.Color(50, 110, 211));
-        jLabel8.setText("cool (true / false)");
-        jLabel8.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
+        carCoolLabel.setFont(new java.awt.Font("Arial", 0, 13)); // NOI18N
+        carCoolLabel.setForeground(new java.awt.Color(50, 110, 211));
+        carCoolLabel.setText("cool (true / false)");
+        carCoolLabel.setHorizontalTextPosition(javax.swing.SwingConstants.RIGHT);
 
         doneLabel.setFont(new java.awt.Font("Arial", 0, 17)); // NOI18N
         doneLabel.setForeground(new java.awt.Color(33, 209, 38));
@@ -127,11 +142,11 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
         this.setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(layout.createSequentialGroup()
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(layout.createSequentialGroup()
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 53, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addComponent(doneLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 99, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(layout.createSequentialGroup()
                         .addGap(19, 19, 19)
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -140,12 +155,12 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
                                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                                         .addComponent(jSeparator8)
-                                        .addComponent(jLabel8, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addComponent(jLabel7, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(carCoolLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(carNameLabel, javax.swing.GroupLayout.PREFERRED_SIZE, 100, javax.swing.GroupLayout.PREFERRED_SIZE)
                                         .addComponent(carNameTextField)
                                         .addComponent(coolTextField, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
                                     .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 152, javax.swing.GroupLayout.PREFERRED_SIZE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 378, Short.MAX_VALUE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 380, Short.MAX_VALUE)
                                 .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)))))
                 .addContainerGap())
         );
@@ -155,14 +170,14 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
                 .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(layout.createSequentialGroup()
-                        .addComponent(jLabel7)
+                        .addComponent(carNameLabel)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(carNameTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addComponent(sendButton, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jSeparator7, javax.swing.GroupLayout.PREFERRED_SIZE, 9, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jLabel8)
+                .addComponent(carCoolLabel)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(coolTextField, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
@@ -213,9 +228,9 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
             resultTextPanel.setText(response);
 
             doneLabel.setVisible(true);
-            doneLabel.setText("Done!");
+            doneLabel.setText(Resources.getResourceBundle().getString("done"));
         } catch (ServerIsDownException e) {
-            JOptionPane.showMessageDialog(null, e.getMessage());
+            JOptionPane.showMessageDialog(null, Resources.getResourceBundle().getString("error.serverIsDown"));
         }
 
 
@@ -223,11 +238,11 @@ public class FilterCarCommandPanel extends javax.swing.JPanel {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel carCoolLabel;
+    private javax.swing.JLabel carNameLabel;
     private javax.swing.JTextField carNameTextField;
     private javax.swing.JTextField coolTextField;
     private javax.swing.JLabel doneLabel;
-    private javax.swing.JLabel jLabel7;
-    private javax.swing.JLabel jLabel8;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JSeparator jSeparator7;
     private javax.swing.JSeparator jSeparator8;
